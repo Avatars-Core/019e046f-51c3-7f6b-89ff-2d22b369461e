@@ -17,6 +17,17 @@
 # preexistente ajeno que no puedes arreglar ahora): `git commit --no-verify`
 # dejando el motivo en el mensaje del commit. No debe ser hábito.
 #
+# ACOTACIÓN DEL RUIDO (--warnings-avatar). El check se invoca con
+# `--warnings-avatar=<uuid-del-repo-que-commitea>`: se listan solo los warnings
+# de TU avatar, y la cabecera sigue diciendo el total del multiverso. Los
+# ERRORES no se tocan — siguen siendo globales y siguen decidiendo el exit code,
+# así que el gate de arriba se mantiene intacto. NO se usa `--avatar=`: ese flag
+# filtra también los errores y recalcularía el `ok`, con lo que un error de otro
+# avatar dejaría de bloquear — exactamente lo que este hook existe para impedir.
+# El nombre de carpeta del repo ES el uuid del avatar (cerrar-identidad-uuid).
+# Si el repo que commitea no es un avatar del multiverso, se cae al check global
+# sin flag en vez de fallar.
+#
 # La detección vive en la puerta natural del workflow (el commit), no en CHECK
 # del próximo ciclo del avatar (que puede tardar días o semanas).
 #
@@ -35,7 +46,10 @@
 
 ESSENCE_UID="019d8dc4-d3e0-76ca-b047-70e2b5b71674"
 
-dir="$(git rev-parse --show-toplevel)"
+repo_root="$(git rev-parse --show-toplevel)"
+repo_uid="$(basename "$repo_root")"
+
+dir="$repo_root"
 while [ "$dir" != "/" ] && [ -n "$dir" ]; do
   if [ -d "$dir/scaamn-multiverse/$ESSENCE_UID" ]; then
     check_dir="$dir/scaamn-multiverse/$ESSENCE_UID/avatar-mind/scaa/structure/data-structure"
@@ -45,7 +59,13 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
       exit 1
     fi
     cd "$check_dir" || exit 1
-    npm run check
+    # El repo que commitea es un avatar del multiverso si su carpeta cuelga de
+    # <contenedor>/scaamn-multiverse/ y tiene config.yml. Solo entonces se acota.
+    if [ -f "$dir/scaamn-multiverse/$repo_uid/config.yml" ]; then
+      npm run check -- "--warnings-avatar=$repo_uid"
+    else
+      npm run check
+    fi
     exit $?
   fi
   parent="$(dirname "$dir")"
