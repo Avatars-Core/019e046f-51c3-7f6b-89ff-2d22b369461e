@@ -16,7 +16,7 @@
           },
           {
             "type": "command",
-            "command": "echo \"SCAAMN comunicacion: responde primero a la pregunta del humano (si es de si/no, empieza por si o por no). Traduce de caja negra a caja blanca: sus terminos, no los tuyos. Estructura resumen + detalle con la misma informacion a dos profundidades. No reenvies el informe del sub-agente. Una sola decision por respuesta.\""
+            "command": "echo \"SCAAMN comunicacion: responde primero a la pregunta del humano (si es de si/no, empieza por si o por no). Traduce de caja negra a caja blanca: sus terminos, no los tuyos. Clasifica lo pendiente en ejecucion/exploracion (tabla de doble lista dentro del resumen si hay algun item). Estructura resumen + detalle con la misma informacion a dos profundidades. No reenvies el informe del sub-agente. Una sola decision por respuesta, salvo que haya 2 o mas confirmaciones de tipo eleccion pendientes a la vez: entonces agrupalas en una sola tanda de AskUserQuestion en vez de preguntar una a una.\""
           }
         ]
       }
