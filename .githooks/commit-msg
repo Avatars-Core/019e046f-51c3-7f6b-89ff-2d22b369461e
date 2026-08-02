@@ -1,0 +1,144 @@
+#!/bin/sh
+#
+# Commit-msg hook canónico de SCAAMN — rechaza la co-autoría de Claude.
+#
+# Materializa la regla universal de `CLAUDE.md` § *Commits*: «Nunca incluir
+# co-autoría de Claude en los mensajes de commit (ni `Co-Authored-By: Claude …`,
+# ni `🤖 Generated with Claude Code`, ni firmas equivalentes). Aplica a todos los
+# avatares y a todos los repos sobre los que actúan, incluido el propio del
+# avatar y el sistema-operado. El commit lo firma el humano.»
+#
+# POR QUÉ MECANIZARLA. La regla llevaba escrita desde el principio y se violaba
+# en 1.631 de los 6.631 commits vivos del multiverso (24,6 %), en 246 de los 268
+# repos. Es exactamente el modo de fallo de `disciplina-de-reglas-nuevas.md`
+# invertido: no una regla muda, sino una regla **sin puerta**. La firma la añade
+# el harness por instrucción de entorno, no el avatar por decisión — así que
+# recordarla en prosa no la para. Solo la para un hard-fail en el commit.
+#
+# COMPORTAMIENTO — ES UN GATE DURO. Si el mensaje trae la firma, `exit 1` y el
+# commit no se hace. No hay soft-warning: la filosofía `soft-warning-no-corta`
+# (essence meta-narrative § VII) dice que un aviso que no corta equivale a
+# silencio, y este es el caso de libro — la firma se venía avisando en tres
+# `CLAUDE.md` distintos y se coló 1.631 veces.
+#
+# FALLO SEGURO, y gobierna todo el diseño de abajo. Esto corre en el commit-msg
+# de los 268 repos del multiverso. Si el hook petara por una razón que no es «el
+# mensaje trae la firma» —fichero ilegible, `grep` ausente, argumento vacío—,
+# bloquearía commits en todo el multiverso a la vez por algo que no es deterioro
+# del canon. Por eso:
+#   · NO lleva `set -e`: ningún fallo intermedio puede tumbar el hook.
+#   · Toda condición previa que no se pueda evaluar sale con `exit 0` (deja
+#     pasar), nunca con `exit 1`.
+#   · El ÚNICO `exit 1` del fichero está detrás de una coincidencia positiva y
+#     explícita de una de las cuatro firmas. Un `exit 1` que no venga de haber
+#     encontrado la firma sería un bug, no una precaución.
+# Es el mismo criterio que `puerta.sh` en el `pre-commit`, y por la misma razón.
+#
+# ANCLAJE EN COLUMNA 0 — cómo se distingue la firma de la mención legítima.
+# El problema es real: un commit de este mismo ciclo necesita **citar** la firma
+# para documentar la regla que la prohíbe, y un hook que rechazara toda aparición
+# del texto haría imposible hablar de su propia regla. La distinción no es
+# semántica —no se puede leer la intención— sino **posicional**, y resulta que
+# la posición basta:
+#   · La firma real es un *trailer* de git: línea propia, columna 0, al final del
+#     mensaje. Medido sobre los 2.059 casos del multiverso (todas las refs):
+#     2.059 de 2.059 en columna 0, cero con sangría. Sin excepciones.
+#   · La mención legítima va inline, entrecomillada o con sangría de lista:
+#     «ni `Co-Authored-By: Claude …`», «- Co-Authored-By: …». Ninguna empieza
+#     en columna 0 con el literal desnudo.
+# Por eso los patrones van anclados con `^` y sin tolerancia de espacios: una
+# línea sangrada, un ítem de lista o un texto entre backticks pasan. Se declara
+# como lo que es —una heurística posicional, no una prueba— y su falso negativo
+# conocido está abajo, en «Lo que este hook NO ve».
+#
+# LO QUE ESTE HOOK NO VE. Un mensaje que ponga la firma en columna 0 con ánimo
+# de citarla queda rechazado (falso positivo): la salida es sangrarla o
+# entrecomillarla, que es como se cita de todas formas. Y un mensaje que la
+# ponga sangrada con ánimo de firmar pasa (falso negativo): es inalcanzable en
+# la práctica porque quien firma es el harness, y el harness firma en columna 0.
+# Ninguno de los dos se tapa con un `if` mudo — se declaran aquí (regla 5 de
+# `disciplina-de-reglas-nuevas.md`: ninguna rama se salta un caso en silencio).
+#
+# SIN VENTANA DE GRACIA, y es deliberado. Los `@gate` del ciclo de vida llevan
+# `since:` porque el corpus arrastra deuda previa que no se puede exigir
+# retroactivamente. Aquí no aplica: el hook juzga **el mensaje que se está
+# escribiendo ahora**, no el árbol. La deuda histórica (1.631 commits) es
+# inalcanzable para él por construcción, así que no hay nada que eximir. Ver
+# el artefacto de PLAN del ciclo `2026-08-02--cerrar-la-firma-de-coautoria`
+# para por qué esa deuda no se reescribe.
+#
+# Instalado por: <multiverso>/<ESSENCE_UID>/install-hooks.sh
+# Activado vía: git config core.hooksPath .githooks (per-clone, hay que correr
+#               install-hooks.sh tras cada clone).
+# Probado por:  avatar-mind/scaa/structure/data-structure/test-commit-msg.sh
+#               (`npm run test-commit-msg`), con fixture positivo y negativo por
+#               cada una de las cuatro firmas y prueba por rotura.
+#
+
+msg_file="$1"
+
+# ── Precondiciones: todo lo que no se pueda evaluar, pasa ─────────────────────
+# Ninguna de estas tres ramas puede emitir `exit 1`. Si el hook no sabe leer el
+# mensaje, no tiene derecho a opinar sobre él.
+[ -n "$msg_file" ] || exit 0
+[ -f "$msg_file" ] || exit 0
+[ -r "$msg_file" ] || exit 0
+
+# Las líneas de comentario (`#`) las descarta git antes de guardar el mensaje,
+# así que no son parte del commit. Se quitan aquí para que el texto de ayuda que
+# git mete en el editor —que menciona ramas, ficheros y a veces trailers— no
+# pueda disparar el hook.
+cuerpo="$(sed 's/^#.*$//' "$msg_file" 2>/dev/null)"
+[ -n "$cuerpo" ] || exit 0
+
+# ── Las cuatro firmas ─────────────────────────────────────────────────────────
+# Cada una tiene fixture positivo y negativo en test-commit-msg.sh, y cada una
+# es alcanzable (regla 6): las firmas 1, 2 y 4 se han observado en el multiverso
+# o las emite el harness de esta máquina; la 3 es la forma histórica
+# `🤖 Generated with [Claude Code]`, presente en la redacción de la regla.
+#
+#   F1 · trailer de co-autoría con nombre Claude  → `Co-Authored-By: Claude …`
+#   F2 · trailer de co-autoría con correo de Anthropic (cubre nombres futuros
+#        que no digan «Claude»: Fable, Opus, el que venga)
+#   F3 · firma de generación                      → `🤖 Generated with [Claude Code]`
+#   F4 · trailer de sesión                        → `Claude-Session: …`
+#
+# `grep -i` para insensibilidad a mayúsculas (los trailers de git lo son) y `-E`
+# para la alternancia. Anclados en `^` — ver «ANCLAJE EN COLUMNA 0» arriba.
+patrones='^co-authored-by:[[:space:]]*claude'
+patrones="$patrones"'|^co-authored-by:.*@anthropic\.com'
+patrones="$patrones"'|^(🤖[[:space:]]*)?generated with[[:space:]]*\[?claude'
+patrones="$patrones"'|^claude-session:'
+
+encontrado="$(printf '%s\n' "$cuerpo" | grep -inE "$patrones" 2>/dev/null)"
+
+# `grep` sin coincidencias devuelve 1 y cadena vacía: ese es el camino feliz.
+[ -n "$encontrado" ] || exit 0
+
+# ── Única rama que rechaza ────────────────────────────────────────────────────
+echo "✗ commit-msg: el mensaje lleva firma de co-autoría de Claude." >&2
+echo "" >&2
+echo "   Línea(s) que lo disparan:" >&2
+printf '%s\n' "$encontrado" | sed 's/^/     /' >&2
+echo "" >&2
+echo "   LA REGLA. \`CLAUDE.md\` de essence § *Commits*: «Nunca incluir" >&2
+echo "   co-autoría de Claude en los mensajes de commit (ni \`Co-Authored-By:" >&2
+echo "   Claude …\`, ni \`🤖 Generated with Claude Code\`, ni firmas" >&2
+echo "   equivalentes). Aplica a todos los avatares y a todos los repos sobre" >&2
+echo "   los que actúan, incluido el propio del avatar y el sistema-operado." >&2
+echo "   El commit lo firma el humano.»" >&2
+echo "" >&2
+echo "   Vive en: scaamn-multiverse/019d8dc4-d3e0-76ca-b047-70e2b5b71674/CLAUDE.md" >&2
+echo "" >&2
+echo "   CÓMO SE CORRIGE. Quita las líneas de firma del mensaje y repite:" >&2
+echo "" >&2
+echo "     git commit --amend        (si el commit ya se hizo)" >&2
+echo "     git commit -m \"<mensaje sin firma>\"   (si aún no)" >&2
+echo "" >&2
+echo "   La firma la añade el harness por instrucción de entorno, no tú: si" >&2
+echo "   reaparece commit tras commit, quita la instrucción en vez de borrarla" >&2
+echo "   a mano cada vez." >&2
+echo "" >&2
+echo "   ¿Querías CITAR la firma para documentar la regla? El hook solo mira la" >&2
+echo "   columna 0. Sángrala dos espacios o ponla entre backticks y pasa." >&2
+exit 1
