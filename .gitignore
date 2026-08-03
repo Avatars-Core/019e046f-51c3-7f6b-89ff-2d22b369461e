@@ -7,3 +7,8 @@ config.local.yaml
 
 # Sesiones del multiverse-manager — artefactos volátiles per-máquina
 **/sessions/
+
+# Runtime de la triada iea.* — lo crea concentrarse.sh al encender la vigilancia
+# sobre un ciclo con artefacto --do--. Contiene .session-id, plantillas
+# renderizadas y el bus events.jsonl: efimero y per-maquina como **/sessions/.
+runtime/

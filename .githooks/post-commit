@@ -62,8 +62,23 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
       if [ -n "$PUERTA_JUICIO_SINCRONO" ]; then
         bash "$puerta" --avatar-root="$main_root" --modo=juicio || true
       else
-        registro="$main_root/runtime/.juicio.log"
-        mkdir -p "$main_root/runtime" 2>/dev/null
+        # `runtime/` NO se crea aquí. Se creaba —con `mkdir -p`, incondicional y
+        # antes siquiera de saber si había algo que juzgar— y eso sembró la
+        # carpeta en los 268 avatares del multiverso, que quedaron con un
+        # `?? runtime/` permanente en su `git status`. Es carpeta de máquina: la
+        # crea quien la puebla (`concentrarse.sh`, al ENCENDER la tríada desde el
+        # `pre-commit`), no el hook que sólo quiere dejar un rastro.
+        #
+        # Que no exista no pierde ningún juicio: el modo `juicio` sólo juzga
+        # conversaciones con marca `runtime/<conv>/.puerta`, y esa marca vive
+        # DENTRO de `runtime/`. Sin la carpeta no puede haber marca, luego no
+        # puede haber juicio que registrar. Cuando sí lo hay, la carpeta ya está
+        # y el rastro se escribe en `runtime/.juicio.log` como siempre.
+        if [ -d "$main_root/runtime" ]; then
+          registro="$main_root/runtime/.juicio.log"
+        else
+          registro="/dev/null"
+        fi
         # Detachado: el humano no espera. El rastro queda en `runtime/.juicio.log`
         # y, lo que importa de verdad, en el bus de cada conversación.
         ( bash "$puerta" --avatar-root="$main_root" --modo=juicio >>"$registro" 2>&1 & ) </dev/null >/dev/null 2>&1
