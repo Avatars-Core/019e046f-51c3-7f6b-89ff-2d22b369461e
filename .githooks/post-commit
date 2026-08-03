@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# post-commit hook canónico de SCAAMN — EL JUICIO DE LA TRÍADA.
+#
+# Aquí, y sólo aquí, corre un LLM en el camino de un commit. Es deliberado y es
+# la mitad de un par:
+#
+#   post-commit  → JUICIO no determinista. Un verificador mira el commit contra
+#                  la lista `verify:` del estado destino y deja su veredicto en
+#                  el bus `events.jsonl`.
+#   pre-commit   → CORTE determinista. Lee ese veredicto —de un fichero, no de
+#                  un modelo— y bloquea el commit siguiente si hay desviación
+#                  sin resolver.
+#
+# Esa separación es lo que hace el corte auditable, reproducible y barato. Un
+# `pre-commit` que invocara al modelo sería lento, irrepetible y opaco.
+#
+# ── POR QUÉ VA EN SEGUNDO PLANO ─────────────────────────────────────────────
+#
+# `post-commit` no puede deshacer el commit (ya está hecho), pero sí puede tener
+# al humano esperando: una invocación real cuesta minutos. Se lanza detachado.
+#
+# La objeción que en su día descartó detachar el conductor entero —«un bucle de
+# LLM en segundo plano editando ficheros por detrás del humano no es
+# auditable»— **no aplica aquí**, y no por optimismo: el `iea.checker` tiene
+# `Edit`, `Write` y `NotebookEdit` **denegados** en su `settings.local.json`
+# (§ *Permisos por rol* del README del adapter). Lo único que puede hacer es
+# leer y anexar una línea al bus. Un juez que no puede tocar nada es lo que
+# convierte el segundo plano en aceptable.
+#
+# Con `PUERTA_JUICIO_SINCRONO=1` corre en primer plano — es como lo ejecutan las
+# pruebas, que necesitan determinismo.
+#
+# Coste declarado, no descubierto: **una** invocación a un LLM por commit, y
+# sólo en un avatar que a la vez (a) tenga un ciclo vivo con artefacto `--do--`,
+# (b) tenga la tríada encendida por la puerta y (c) cuyo plan declare `verify:`
+# en el estado destino. Si falta cualquiera de las tres, cero invocaciones y se
+# dice por qué.
+#
+# Instalado por: <multiverso>/<ESSENCE_UID>/install-hooks.sh
+
+ESSENCE_UID="019d8dc4-d3e0-76ca-b047-70e2b5b71674"
+
+git_common="$(git rev-parse --git-common-dir 2>/dev/null)"
+if [ -n "$git_common" ]; then
+  case "$git_common" in
+    /*|?:/*) ;;
+    *) git_common="$(pwd)/$git_common" ;;
+  esac
+  main_root="$(cd "$(dirname "$git_common")" 2>/dev/null && pwd)"
+fi
+[ -z "$main_root" ] && main_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+[ -z "$main_root" ] && exit 0
+
+dir="$main_root"
+while [ "$dir" != "/" ] && [ -n "$dir" ]; do
+  if [ -d "$dir/scaamn-multiverse/$ESSENCE_UID" ]; then
+    puerta="$dir/scaamn-multiverse/$ESSENCE_UID/avatar-body/concentracion/puerta.sh"
+    # Fallo seguro: sin puerta, sin `config.yml` o sin `bash`, no pasa nada. El
+    # commit ya está hecho y este hook no puede ni debe alterarlo.
+    if [ -f "$puerta" ] && [ -f "$main_root/config.yml" ]; then
+      if [ -n "$PUERTA_JUICIO_SINCRONO" ]; then
+        bash "$puerta" --avatar-root="$main_root" --modo=juicio || true
+      else
+        registro="$main_root/runtime/.juicio.log"
+        mkdir -p "$main_root/runtime" 2>/dev/null
+        # Detachado: el humano no espera. El rastro queda en `runtime/.juicio.log`
+        # y, lo que importa de verdad, en el bus de cada conversación.
+        ( bash "$puerta" --avatar-root="$main_root" --modo=juicio >>"$registro" 2>&1 & ) </dev/null >/dev/null 2>&1
+      fi
+    fi
+    exit 0
+  fi
+  parent="$(dirname "$dir")"
+  [ "$parent" = "$dir" ] && break
+  dir="$parent"
+done
+
+exit 0

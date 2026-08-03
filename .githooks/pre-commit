@@ -24,38 +24,84 @@
 # así que el gate de arriba se mantiene intacto. NO se usa `--avatar=`: ese flag
 # filtra también los errores y recalcularía el `ok`, con lo que un error de otro
 # avatar dejaría de bloquear — exactamente lo que este hook existe para impedir.
-# El nombre de carpeta del repo ES el uuid del avatar (cerrar-identidad-uuid).
+# El nombre de carpeta del repo ES el uuid del avatar (cerrar-identidad-uuid),
+# tomado SIEMPRE del repo principal vía `--git-common-dir` — desde un worktree,
+# `--show-toplevel` daría `agent-<hash>` y la acotación se perdería (ver abajo).
 # Si el repo que commitea no es un avatar del multiverso, se cae al check global
 # sin flag en vez de fallar.
 #
 # La detección vive en la puerta natural del workflow (el commit), no en CHECK
 # del próximo ciclo del avatar (que puede tardar días o semanas).
 #
-# Mecánica (tras paso 3 del ciclo `essence-dentro-del-multiverso`, 2026-05-09):
+# Mecánica (tras paso 3 del ciclo `essence-dentro-del-multiverso`, 2026-05-09;
+# reapuntada al método el 2026-08-03):
 #   1. Sube por la jerarquía buscando contenedor con `scaamn-multiverse/<ESSENCE_UID>/`
 #      (essence vive como avatar dentro del multiverso, identificada por UID).
-#   2. Si encuentra: invoca `npm run check` desde data-structure de essence.
+#   2. Si encuentra: invoca `npm run check` desde `<contenedor>/scaamn-method/`.
 #   3. Si no encuentra: falla con mensaje claro. Essence es el motor del avatar
 #      — sin essence, el avatar no opera. Si tienes razón justificada, usa
 #      `git commit --no-verify`.
 #
-# Instalado por: <multiverso>/<ESSENCE_UID>/install-hooks.sh
+# ── DOS ANCLAS, NO UNA (mudanza del método, 2026-08-03) ──────────────────────
+#
+# `ESSENCE_UID` sigue siendo el **ancla de descubrimiento**: es lo que identifica
+# al contenedor `scaamn/` subiendo por los padres. No se sustituye por
+# `scaamn-method` aunque el compilador viva ya ahí — el multiverso es lo que
+# marca el contenedor, y buscar por el nombre del método haría que un directorio
+# cualquiera llamado así secuestrara la búsqueda.
+#
+# `METHOD_DIRNAME` es el **ancla de ejecución**: colgando del contenedor, hermano
+# del multiverso. Antes el check se invocaba en
+# `<essence>/avatar-mind/scaa/structure/data-structure`; el compilador salió de
+# ahí el 2026-08-03 y esa ruta tuvo un puente temporal hasta que este hook se
+# reinstaló en los 268. El puente ya no existe.
+#
+# Se sigue SUBIENDO, no contando niveles: un recuento no falla al moverse, apunta
+# a otro sitio en silencio.
+#
+# La **puerta de la tríada** (abajo) sigue viviendo en essence
+# (`avatar-body/concentracion/`): no se mudó, y por eso se resuelve con la otra
+# ancla.
+#
+# Instalado por: <contenedor>/scaamn-method/install-hooks.sh
 # Activado vía: git config core.hooksPath .githooks (per-clone, hay que
 #               correr install-hooks.sh tras cada clone).
 #
 
 ESSENCE_UID="019d8dc4-d3e0-76ca-b047-70e2b5b71674"
+METHOD_DIRNAME="scaamn-method"
 
 repo_root="$(git rev-parse --show-toplevel)"
-repo_uid="$(basename "$repo_root")"
 
-dir="$repo_root"
+# El uuid del avatar se deriva del repo PRINCIPAL, no del working tree actual.
+# En un worktree (`git worktree add`, que es el modo por defecto al paralelizar
+# agentes) `--show-toplevel` apunta a .claude/worktrees/agent-<hash>/, cuyo
+# basename NO es un uuid de avatar: la acotación de warnings fallaba en silencio
+# y el commit escupía los ~2000 warnings del multiverso entero. `--git-common-dir`
+# resuelve siempre al `.git` del repo principal (en un worktree apunta al del
+# original; en un clone normal es el propio `.git`), así que su carpeta padre es
+# la raíz del avatar en ambos casos.
+git_common="$(git rev-parse --git-common-dir 2>/dev/null)"
+if [ -n "$git_common" ]; then
+  # `--git-common-dir` puede venir relativo (".git"); se ancla al cwd para poder
+  # subir al padre de forma fiable.
+  case "$git_common" in
+    /*|?:/*) ;;
+    *) git_common="$(pwd)/$git_common" ;;
+  esac
+  main_root="$(cd "$(dirname "$git_common")" 2>/dev/null && pwd)"
+fi
+[ -z "$main_root" ] && main_root="$repo_root"
+repo_uid="$(basename "$main_root")"
+
+dir="$main_root"
 while [ "$dir" != "/" ] && [ -n "$dir" ]; do
   if [ -d "$dir/scaamn-multiverse/$ESSENCE_UID" ]; then
-    check_dir="$dir/scaamn-multiverse/$ESSENCE_UID/avatar-mind/scaa/structure/data-structure"
-    if [ ! -d "$check_dir" ]; then
-      echo "✗ pre-commit: contenedor encontrado en $dir pero data-structure no existe en essence." >&2
-      echo "   Ruta esperada: $check_dir" >&2
+    check_dir="$dir/$METHOD_DIRNAME"
+    if [ ! -f "$check_dir/package.json" ]; then
+      echo "✗ pre-commit: contenedor encontrado en $dir pero el método no está en su sitio." >&2
+      echo "   Ruta esperada: $check_dir/package.json" >&2
+      echo "   El compilador avatar-lang vive en <contenedor>/$METHOD_DIRNAME/ desde el 2026-08-03." >&2
       exit 1
     fi
     cd "$check_dir" || exit 1
@@ -66,7 +112,75 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
     else
       npm run check
     fi
-    exit $?
+    check_code=$?
+
+    # ── LA PUERTA DE LA TRIADA (P8, hueco H1) ─────────────────────────────
+    #
+    # Se enciende la vigilancia `iea.*` cuando aparece un artefacto `--do--` en
+    # un ciclo vivo, y se apaga cuando el ciclo se cierra. Hecho de filesystem,
+    # nunca memoria del modelo. El commit es el INSTANTE DE CONMUTACION; el
+    # intervalo lo cubren las sesiones logicas, que persisten entre commits.
+    #
+    # FALLO SEGURO, y es el criterio que gobierna estas cinco lineas: **la
+    # vigilancia es una mejora, no un requisito de integridad**. Esto corre en
+    # el pre-commit de los 268 avatares del multiverso; si fallara cortando,
+    # bloquearia commits en todo el multiverso a la vez por algo que no es
+    # deterioro del canon. Por eso el exit code que sale de aqui sigue siendo
+    # **el de `npm run check`, jamas el de la puerta**: `puerta.sh` sale siempre
+    # con 0 por dentro, y ademas se le pone `|| true` por fuera. Doble red, a
+    # proposito — la de dentro puede deshacerse editando el script, la de fuera
+    # no.
+    #
+    # Coste declarado: el PRIMER commit de un ciclo con `--do--` paga un
+    # `concentrarse.sh` (3 invocaciones a un LLM, ~30 s). Una vez por ciclo, no
+    # por commit — `puerta.sh` no reenciende lo que ya esta encendido.
+    # Solo se conmuta si el check paso. Con el check en rojo no hay commit, asi
+    # que encender la triada seria encenderla sobre un `--do--` que quiza ni
+    # llega a existir en la historia.
+    puerta="$dir/scaamn-multiverse/$ESSENCE_UID/avatar-body/concentracion/puerta.sh"
+    if [ "$check_code" -eq 0 ] && [ -f "$puerta" ] && [ -f "$main_root/config.yml" ]; then
+      bash "$puerta" --avatar-root="$main_root" || true
+    fi
+
+    # ── EL CORTE DETERMINISTA DE LA TRIADA (H-alfa, 2026-08-02) ───────────
+    #
+    # Esto SÍ corta, y es lo único de la tríada que corta. Lo decidió el humano
+    # con su razón escrita: *«un aviso que no corta es silencio, y eso ya está
+    # en el canon»*. Alcance decidido: los 268.
+    #
+    # **Aquí no corre ningún LLM.** Lo que se lee es un veredicto que un
+    # verificador dejó en `runtime/<conv>/events.jsonl` durante el `post-commit`
+    # anterior. El juicio es no determinista y va en el otro hook; el corte es
+    # determinista —lee un fichero— y va aquí. Esa separación es lo que lo hace
+    # auditable, y es la misma forma con la que `--grafo` publica y el gate
+    # corta.
+    #
+    # FALLO SEGURO, y es estricto: bus ausente, bus ilegible, sin `node`, sin
+    # veredicto todavía, o invocación que se colgó → **el commit pasa**.
+    # Ausencia de juicio NO es juicio negativo. Sólo bloquea un `verdict`
+    # explícito de desviación (o una `human_escalation`) sin resolver.
+    #
+    # VÁLVULA DE ESCAPE, documentada desde el minuto uno porque un control sin
+    # salida se erosiona en su primera equivocación:
+    #   - `puerta.sh --modo=indultar --conv=<slug> --motivo="..."` (camino normal)
+    #   - `SCAAMN_SIN_CORTE="motivo escrito" git commit ...` (emergencia; sin
+    #     motivo NO abre)
+    # El criterio de cuándo es legítimo usarlas está en `corte.js` y en
+    # `do-base.md`. Los dos caminos dejan rastro en el bus.
+    #
+    # SITIO EN LA CADENA (regla 7): corre DESPUÉS de `npm run check` y de la
+    # conmutación. `npm run check` **puede enmascararlo**: con el check en rojo
+    # el commit ya no sale y este corte no llega a mirar ni a publicar su
+    # población. Deliberado — el check es el gate viejo y de confianza, éste es
+    # el mecanismo nuevo. Denominador: los `runtime/<conv>/` con marca
+    # `.puerta`, publicado en cada ejecución con la palabra `evaluables`.
+    if [ "$check_code" -eq 0 ] && [ -f "$puerta" ] && [ -f "$main_root/config.yml" ]; then
+      bash "$puerta" --avatar-root="$main_root" --modo=corte
+      corte_code=$?
+      [ "$corte_code" -ne 0 ] && exit "$corte_code"
+    fi
+
+    exit $check_code
   fi
   parent="$(dirname "$dir")"
   [ "$parent" = "$dir" ] && break
