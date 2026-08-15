@@ -12,23 +12,80 @@
 #   - WARNINGS (p.ej. [regla 14] md de unidad sin bloque avatar-lang) → exit 0
 #     → NO cortan HOY. Son deuda histórica en migración; su destino canónico es
 #     hard-fail por defecto (vía --strict) una vez cerrada la deuda.
-# El check es GLOBAL: un error introducido por OTRO avatar bloquea TUS commits
-# hasta que se corrija. Excepción justificada (CI/CD, clone aislado, o error
-# preexistente ajeno que no puedes arreglar ahora): `git commit --no-verify`
-# dejando el motivo en el mensaje del commit. No debe ser hábito.
+# ── EL ALCANCE: EL CIERRE, NO EL CORPUS (2026-08-15) ────────────────────────
 #
-# ACOTACIÓN DEL RUIDO (--warnings-avatar). El check se invoca con
-# `--warnings-avatar=<uuid-del-repo-que-commitea>`: se listan solo los warnings
-# de TU avatar, y la cabecera sigue diciendo el total del multiverso. Los
-# ERRORES no se tocan — siguen siendo globales y siguen decidiendo el exit code,
-# así que el gate de arriba se mantiene intacto. NO se usa `--avatar=`: ese flag
-# filtra también los errores y recalcularía el `ok`, con lo que un error de otro
-# avatar dejaría de bloquear — exactamente lo que este hook existe para impedir.
+# HASTA HOY AQUÍ PONÍA: *«el compilador SIGUE COMPILANDO EL MULTIVERSO ENTERO —
+# hace falta para resolver las refs cross-avatar, y no se toca»*. **Ya no es
+# cierto, y era la mitad de una verdad**: hacía falta compilar los avatares A LOS
+# QUE ÉSTE HACE REFERENCIA, que no es lo mismo que compilarlos todos. La objeción
+# es del humano (2026-08-15) y era correcta.
+#
+# `--alcance=<uuid>` compila el CIERRE del avatar que commitea: él, todo lo que
+# declara transitivamente en `inherits-from`/`composes`/`requires-from`, y quien
+# le apunta a él (con el cierre de esos, que es la mitad que hace falta para que
+# la imputación de `--errores-avatar` siga viendo lo que este avatar rompe en
+# repos ajenos). Medido sobre el árbol real: **cierre medio 8,2 avatares de
+# 272**; `npm run check` baja de ~7-9 s a ~2,3 s por commit.
+#
+# LO QUE NO SE PIERDE, que es la razón de que esto sea legítimo: la única
+# comprobación genuinamente global —la unicidad de uuid, regla 1— se sigue
+# midiendo sobre los 272. No necesita compilar: se lee de los `config.yml` (69 ms).
+# Verificado con un oráculo que compara, para los 272 avatares uno a uno, los
+# hallazgos imputables en acotado contra los del barrido completo: **272 de 272
+# idénticos**, con y sin `--strict`.
+#
+# LO QUE SÍ QUEDA FUERA, dicho con su nombre: las reglas de avatar (14, 18-21,
+# 23-27) de los avatares fuera del cierre. No dejan de mirarse — las cobra el
+# `pre-commit` de cada uno de ellos y el barrido de consolidación
+# (`npm run check` sin flag), que sigue compilando los 272.
+#
+# ESCOTILLA: `SCAAMN_ALCANCE_COMPLETO=1 git commit ...` fuerza el barrido entero
+# desde el hook. Para cuando se sospeche del acotado y haya que descartarlo.
+#
+# ── EL RADIO DE BLOQUEO: POR AVATAR, NO GLOBAL (2026-08-05) ─────────────────
+#
+# Lo que cambia con `--errores-avatar` es de qué errores CORTA este hook: de los
+# 268 a los que son responsabilidad del avatar que commitea.
+#
+# Por qué cambió. El corte global venía de cuando casi todo se perdonaba: casi
+# nunca mordía. Con `alinear-antes-de-endurecer.md` (no se exime, se alinea)
+# cada regla nueva pone a alguien en rojo, y ese alguien paraba a los 268.
+# Bloqueó dos veces en dos días, a una hora cada vez. Medido sobre una población
+# de errores realista (la deuda de regla 14, con `--strict`): 642 errores
+# repartidos en 99 avatares dejaban a 0 de 268 pudiendo guardar; con el corte
+# por avatar, 169 de 268 pueden.
+#
+# `--errores-avatar=<uuid>` NO es un filtro por path. Corta por RESPONSABILIDAD:
+# los errores de tus ficheros MÁS los de cualquier otro avatar cuya referencia
+# rota apunte a ti. Esa segunda mitad es imprescindible y no es un adorno: todos
+# los errores cross-avatar (reglas 2, 4, 13, 17) se reportan en el fichero del
+# REFERENTE, así que con un filtro por path puro el avatar que ROMPE la
+# referencia ajena —borra el md, se archiva, quita la terminalidad de un estado—
+# dejaría de ver el error que causó y podría guardar el destrozo, dejando
+# bloqueado al referente, que no puede arreglarlo porque el fallo no está en su
+# repo. Por eso NO se usa `--avatar=`, que sí filtra por path a secas.
+#
+# Lo que se pierde, dicho con su nombre: un error de OTRO avatar que no te
+# implica ya no te bloquea. Sigue bloqueando a quien lo tiene, y sigue saliendo
+# en `npm run check` sin flag — que es lo que corre el barrido de consolidación
+# (`consolidar-el-multiverso-en-cada-punto-estable.md`), donde la vista global se
+# conserva íntegra. El corte publica siempre las dos cifras (global e imputable),
+# así que la acotación nunca es muda.
+#
+# Excepción justificada (CI/CD, clone aislado, o error ajeno que te implica y no
+# puedes arreglar ahora): `git commit --no-verify` dejando el motivo en el
+# mensaje del commit. No debe ser hábito.
+#
+# ACOTACIÓN DEL RUIDO (--warnings-avatar). Se mantiene tal cual: se listan solo
+# los warnings de TU avatar y la cabecera sigue diciendo el total del multiverso.
+# Los warnings no cortan hoy en ningún caso.
+#
 # El nombre de carpeta del repo ES el uuid del avatar (cerrar-identidad-uuid),
 # tomado SIEMPRE del repo principal vía `--git-common-dir` — desde un worktree,
 # `--show-toplevel` daría `agent-<hash>` y la acotación se perdería (ver abajo).
 # Si el repo que commitea no es un avatar del multiverso, se cae al check global
-# sin flag en vez de fallar.
+# sin flag en vez de fallar: sin uuid no hay a quién imputar, y el fallo seguro
+# de un gate es cortar de más, no de menos.
 #
 # La detección vive en la puerta natural del workflow (el commit), no en CHECK
 # del próximo ciclo del avatar (que puede tardar días o semanas).
@@ -108,7 +165,14 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
     # El repo que commitea es un avatar del multiverso si su carpeta cuelga de
     # <contenedor>/scaamn-multiverse/ y tiene config.yml. Solo entonces se acota.
     if [ -f "$dir/scaamn-multiverse/$repo_uid/config.yml" ]; then
-      npm run check -- "--warnings-avatar=$repo_uid"
+      if [ -n "$SCAAMN_ALCANCE_COMPLETO" ]; then
+        # Escotilla explícita: el barrido entero, para descartar al acotado como
+        # sospechoso. Se dice en voz alta — un modo lento y mudo no se diagnostica.
+        echo "pre-commit: SCAAMN_ALCANCE_COMPLETO — barrido del multiverso entero, sin acotar el alcance." >&2
+        npm run check -- "--errores-avatar=$repo_uid" "--warnings-avatar=$repo_uid"
+      else
+        npm run check -- "--alcance=$repo_uid" "--errores-avatar=$repo_uid" "--warnings-avatar=$repo_uid"
+      fi
     else
       npm run check
     fi
