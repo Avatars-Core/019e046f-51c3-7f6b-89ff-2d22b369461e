@@ -3,6 +3,18 @@
     "defaultMode": "bypassPermissions"
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 10,
+            "command": "node \"C:/Apps/scaamn/scaamn-multiverse/019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/aislamiento-agentes.js\""
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [
