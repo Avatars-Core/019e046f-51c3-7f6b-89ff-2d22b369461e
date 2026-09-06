@@ -1,0 +1,39 @@
+# .gitattributes canónico de SCAAMN — EL FORMATO DE LÍNEA ES LF, SIEMPRE.
+#
+# POR QUÉ EXISTE, con el caso que lo obligó (2026-08-03).
+#
+# Esta máquina (y cualquier Windows con `core.autocrlf=true`) convierte LF -> CRLF
+# al hacer checkout. Un `.md` de 15.987 B en LF pesa 16.172 B en CRLF, y el
+# presupuesto de la regla 21.a del compilador es de 16.000 B medidos sobre el
+# fichero EN DISCO. Es decir: un `git checkout` de ese fichero, o un clon limpio,
+# lo cruzaba de verde a rojo sin que nadie tocara una letra.
+#
+# Y `npm run check` es GLOBAL: un error en cualquier avatar bloquea el commit de
+# TODOS. Un fichero que engorda solo al clonarlo podía dejar los 268 avatares sin
+# poder commitear. Ya ocurrió: cortó un barrido a mitad.
+#
+# Segundo motivo, independiente del tamaño: los ganchos de `.githooks/` son
+# ejecutables de shell. Un `#!/bin/sh` con CRLF no arranca en un `/bin/sh` que no
+# sea el bash de Git para Windows.
+#
+# `eol=lf` no es "preferencia de estilo": es lo que hace que el tamaño de un
+# fichero sea el MISMO en el repo y en el disco de cualquier máquina, y por tanto
+# lo que hace que el presupuesto de la regla 21 signifique algo.
+
+# Todo lo que git detecte como texto: LF en el repo y LF en el working tree.
+* text=auto eol=lf
+
+# Binarios declarados a mano. `text=auto` ya los detecta, pero declararlos evita
+# que una heurística dudosa (un .md con caracteres raros, un .svg) los toque.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.woff  binary
+*.woff2 binary
