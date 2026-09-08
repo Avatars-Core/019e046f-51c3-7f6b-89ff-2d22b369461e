@@ -19,4 +19,8 @@ devuelve un resumen.
 Reporta al humano la línea de resumen literal que imprime el script (`Traídas: N | Limpiadas (PID
 muerto): M | Fallos: K`), con el detalle de cada fallo si los hubo — sin reinterpretarla.
 
+Ver [`README.md`](../../../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-body/coordinacion-avatares/README.md)
+§ *Traer avatares al escritorio virtual actual* y el `CLAUDE.md` raíz de essence § *Traer avatares al
+escritorio virtual actual*.
+
 Regla: no copies el script a tu propio `avatar-body/`. Si algo falta, se arregla en essence.
