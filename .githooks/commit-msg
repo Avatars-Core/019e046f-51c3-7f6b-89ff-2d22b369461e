@@ -110,7 +110,24 @@ patrones="$patrones"'|^co-authored-by:.*@anthropic\.com'
 patrones="$patrones"'|^(🤖[[:space:]]*)?generated with[[:space:]]*\[?claude'
 patrones="$patrones"'|^claude-session:'
 
-encontrado="$(printf '%s\n' "$cuerpo" | grep -inE "$patrones" 2>/dev/null)"
+# LOCALE FIJADO A `C`, Y ES UN ARREGLO DE SEGURIDAD, NO UN DETALLE DE ESTILO.
+#
+# Hasta el 2026-08-25 este `grep` corría con el locale del proceso que invoca el
+# hook. Medido: en standalone (locale de bytes) los 17 casos pasaban, pero
+# ANIDADO dentro de un `git commit` real —bajo `en_US.UTF-8`, que es lo que hay
+# en la máquina donde de verdad se cobra— el caso F3 (`🤖 Generated with
+# [Claude Code]`) NO disparaba y el hook DEJABA PASAR la firma de co-autoría.
+# Es decir: el control aprobaba de más justo en el único sitio donde su
+# veredicto tiene consecuencias, y salía verde en el sitio donde no las tiene.
+#
+# Un control cuyo veredicto lo decide el entorno del que llama no es un control:
+# es una moneda al aire con dos caras distintas según quién la lance. `LC_ALL=C`
+# lo fija a semántica de bytes, que es la que el patrón supone.
+#
+# SE FIJA SÓLO EN ESTA LÍNEA, no en todo el hook: exportarlo arriba cambiaría
+# además el formato de los mensajes de error, que es alcance que nadie ha medido.
+# EL PATRÓN NO SE TOCA — lo que estaba mal era cómo se ejecutaba, no qué busca.
+encontrado="$(printf '%s\n' "$cuerpo" | LC_ALL=C grep -inE "$patrones" 2>/dev/null)"
 
 # `grep` sin coincidencias devuelve 1 y cadena vacía: ese es el camino feliz.
 [ -n "$encontrado" ] || exit 0

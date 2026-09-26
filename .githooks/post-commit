@@ -59,8 +59,38 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
     # Fallo seguro: sin puerta, sin `config.yml` o sin `bash`, no pasa nada. El
     # commit ya está hecho y este hook no puede ni debe alterarlo.
     if [ -f "$puerta" ] && [ -f "$main_root/config.yml" ]; then
+      # ── EL COMMIT SE RESUELVE AQUI, Y VIAJA COMO DATO (2026-09-12) ────────
+      #
+      # Este hook es el UNICO punto del sistema donde el commit esta
+      # garantizado: acaba de hacerse, y su gitdir —el del worktree, si se
+      # commiteo en uno— todavia existe. La puerta corre DETACHADA y tarda
+      # 7-12 min; en esa ventana el hilo principal integra y retira el worktree
+      # (lo manda el `CLAUDE.md`), y entonces el `git -C` de la puerta ya no
+      # resuelve nada, porque `-C` NO anula el `GIT_DIR` heredado. Medido: 80
+      # eventos `transition` con `sha`, `summary` y `ficheros` vacios en 20
+      # conversaciones, del 2026-09-11T15:38Z al 2026-09-12T10:05Z.
+      #
+      # Pasarlo como dato cuesta una linea y cierra tambien el defecto viejo de
+      # que el bucle releyera `HEAD` por conversacion (31 de 69 tandas juzgaron
+      # mas de un commit). Si aqui saliera vacio —no deberia—, la puerta lo
+      # resuelve por su cuenta y lo marca como `sha_derivado_de: head`; y si
+      # tampoco puede, lo dice en el bus en vez de emitir un commit en blanco.
+      #
+      # LA GUARDA DE COMPATIBILIDAD, y no es celo: este hook vive copiado en los
+      # 268 repos del multiverso y `puerta.sh` vive en UNO solo (essence). Los
+      # dos se actualizan en momentos distintos, asi que existe de verdad la
+      # ventana «hook nuevo + puerta vieja», y una puerta vieja responde a un
+      # argumento que no conoce con `exit 2` — o sea, **ningun juicio, en
+      # silencio**. Se pregunta al fichero si lo entiende antes de pasarselo.
+      # Cuando el reparto termine, esta rama dejara de tomarse; se retira
+      # entonces y no antes.
+      sha_juzgado="$(git rev-parse HEAD 2>/dev/null || echo "")"
+      sha_flag=""
+      if [ -n "$sha_juzgado" ] && grep -q -- '--sha=\*)' "$puerta" 2>/dev/null; then
+        sha_flag="--sha=$sha_juzgado"
+      fi
       if [ -n "$PUERTA_JUICIO_SINCRONO" ]; then
-        bash "$puerta" --avatar-root="$main_root" --modo=juicio || true
+        bash "$puerta" --avatar-root="$main_root" --modo=juicio ${sha_flag:+"$sha_flag"} || true
       else
         # `runtime/` NO se crea aquí. Se creaba —con `mkdir -p`, incondicional y
         # antes siquiera de saber si había algo que juzgar— y eso sembró la
@@ -81,7 +111,7 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
         fi
         # Detachado: el humano no espera. El rastro queda en `runtime/.juicio.log`
         # y, lo que importa de verdad, en el bus de cada conversación.
-        ( bash "$puerta" --avatar-root="$main_root" --modo=juicio >>"$registro" 2>&1 & ) </dev/null >/dev/null 2>&1
+        ( bash "$puerta" --avatar-root="$main_root" --modo=juicio ${sha_flag:+"$sha_flag"} >>"$registro" 2>&1 & ) </dev/null >/dev/null 2>&1
       fi
     fi
     exit 0

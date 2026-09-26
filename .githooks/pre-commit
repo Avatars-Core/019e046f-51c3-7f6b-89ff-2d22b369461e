@@ -83,9 +83,34 @@
 # El nombre de carpeta del repo ES el uuid del avatar (cerrar-identidad-uuid),
 # tomado SIEMPRE del repo principal vía `--git-common-dir` — desde un worktree,
 # `--show-toplevel` daría `agent-<hash>` y la acotación se perdería (ver abajo).
-# Si el repo que commitea no es un avatar del multiverso, se cae al check global
-# sin flag en vez de fallar: sin uuid no hay a quién imputar, y el fallo seguro
-# de un gate es cortar de más, no de menos.
+#
+# ── EL REPO QUE NO ES UN AVATAR (2026-08-23) ────────────────────────────────
+#
+# HASTA HOY AQUÍ PONÍA: *«si el repo que commitea no es un avatar del multiverso,
+# se cae al check global sin flag en vez de fallar: sin uuid no hay a quién
+# imputar, y el fallo seguro de un gate es cortar de más, no de menos»*.
+# **La frase es falsa justo para este caso, y salió cara.**
+#
+# «Cortar de más» sólo es el fallo seguro cuando quien recibe el corte puede
+# hacer algo con él. Un repo que no es un avatar —el caso vivo es el propio
+# `scaamn-method`, donde vive el compilador— NO puede arreglar el fichero de un
+# avatar ajeno: no es suyo y no tiene permiso de escritura sobre él. Cortarle de
+# más no protege nada; sólo congela la herramienta con la que se arreglan todos
+# los demás. Y eso fue literal: del 2026-08-16 al 2026-08-22, SEIS DÍAS con el
+# compilador sin poder commitear por un error de regla 20.b del avatar
+# `019db6bd-5678-7ba8-8e1f-4944f66f2562`, y ninguna alarma lo dijo.
+#
+# Lo que corre ahora en esa rama es `--errores-sin-avatar`: el complemento exacto
+# de `--errores-avatar`. Corta por lo que NO es de nadie —el compilador que
+# explota, la colisión de uuid de la regla 1— y deja de cortar por lo ajeno, que
+# se sigue compilando, contando y listando con el uuid de su dueño.
+#
+# Y LA OTRA MITAD, que es la que hace legítimo lo anterior: bajar el radio de
+# bloqueo a cero sin subir el propio no es acotar un guardián, es apagarlo. Por
+# eso el mismo bloque estrena la batería propia del método (`npm test`,
+# `test-hook.sh`, `test-commit-msg.sh`), que hasta hoy NO corría en su
+# `pre-commit`. Radio de bloqueo: de ~280 repos ajenos a 0; de 0 baterías propias
+# a 3.
 #
 # La detección vive en la puerta natural del workflow (el commit), no en CHECK
 # del próximo ciclo del avatar (que puede tardar días o semanas).
@@ -170,13 +195,34 @@ while [ "$dir" != "/" ] && [ -n "$dir" ]; do
         # sospechoso. Se dice en voz alta — un modo lento y mudo no se diagnostica.
         echo "pre-commit: SCAAMN_ALCANCE_COMPLETO — barrido del multiverso entero, sin acotar el alcance." >&2
         npm run check -- "--errores-avatar=$repo_uid" "--warnings-avatar=$repo_uid"
+        check_code=$?
       else
         npm run check -- "--alcance=$repo_uid" "--errores-avatar=$repo_uid" "--warnings-avatar=$repo_uid"
+        check_code=$?
       fi
     else
-      npm run check
+      # El repo que commitea NO es un avatar: sin uuid no hay a quién imputar,
+      # así que se corta por lo que no es de ningún avatar. Ver el bloque
+      # «EL REPO QUE NO ES UN AVATAR» arriba.
+      npm run check -- --errores-sin-avatar
+      check_code=$?
+
+      # ── LA BATERÍA PROPIA DEL MÉTODO ────────────────────────────────────
+      #
+      # Sólo para el repo del método, y con su nombre comprobado: es el único
+      # repo no-avatar que tiene estas tres baterías, y aplicárselas a otro sería
+      # exigirle scripts que no tiene.
+      #
+      # Se suman los tres exit codes al corte en vez de salir al primero, para
+      # que un commit roto por dos motivos los enseñe los dos: parar en el
+      # primero obliga a un segundo intento para descubrir el segundo.
+      if [ "$repo_uid" = "$METHOD_DIRNAME" ]; then
+        echo "pre-commit: batería propia del método — npm test, test-hook.sh, test-commit-msg.sh" >&2
+        npm test           || check_code=$((check_code + 1))
+        npm run test-hook  || check_code=$((check_code + 1))
+        npm run test-commit-msg || check_code=$((check_code + 1))
+      fi
     fi
-    check_code=$?
 
     # ── LA PUERTA DE LA TRIADA (P8, hueco H1) ─────────────────────────────
     #
