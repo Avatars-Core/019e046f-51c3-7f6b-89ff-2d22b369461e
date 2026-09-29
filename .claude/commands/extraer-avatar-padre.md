@@ -1,17 +1,15 @@
 ---
-description: Extrae un avatar padre abstracto desde N≥2 avatares hijos existentes del multiverso
+description: Extrae un avatar padre abstracto desde N hijos existentes del multiverso (N≥2 por defecto; N=1 sólo en la variante anticipatoria firmada)
 ---
 
-**Este comando no tiene proceso propio: invoca el de essence.** El proceso de extracción de avatar
-padre vive en `avatar-mind/narrative/[estado-actual]/life-cycle/procesos/` de essence — life-cycle se
-lee directamente, nunca se copia.
+Lee y ejecuta `../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-mind/narrative/[estado-actual]/life-cycle/procesos/extraer-avatar-padre.md` con los argumentos: el primer token de `$ARGUMENTS` es `<padre-name>`, el resto son `<hijo-1> [<hijo-2> ... <hijo-N>]`.
 
-Proceso: `../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-mind/narrative/[estado-actual]/life-cycle/procesos/extraer-avatar-padre.md`
+**Cardinalidad: N≥2 por defecto, N=1 sólo en la variante anticipatoria.** El flujo canónico destila lo
+común *entre* hermanos y por eso falla con un solo hijo. Pero el proceso declara una rama explícita
+—§ *Variante — extracción anticipatoria (N=1)*— que **admite un único hijo** cuando lo que se promueve
+es el oficio universal hoy encarnado en él, anticipando herederos futuros. Ahí el gate no desaparece:
+se sustituye por un **criterio de generalidad firmado** por el humano. Así que con un solo hijo no
+rechaces la invocación: pregunta si es la variante anticipatoria y pide la justificación firmada que
+el proceso exige.
 
-Lee y ejecuta ese proceso con los argumentos `$ARGUMENTS`.
-
-`$ARGUMENTS`: el primer token es `<padre-name>`, el resto son `<hijo-1> <hijo-2> [<hijo-N>...]` (al
-menos dos hijos requeridos, salvo la variante de extracción anticipatoria con N=1 documentada en el
-proceso).
-
-Regla: no copies este proceso a tu propio `avatar-mind/`. Si algo falta, se arregla en essence.
+**Regla:** este proceso vive sólo en essence y se lee ahí — no lo copies a tu propio avatar. Si algo falta o está mal, se arregla en essence.

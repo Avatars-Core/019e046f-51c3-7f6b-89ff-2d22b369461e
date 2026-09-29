@@ -2,13 +2,7 @@
 description: Propaga un cambio de fichero (texto exacto) a todos los avatares del multiverso
 ---
 
-**Este comando no tiene proceso propio: invoca el de essence.** El proceso de propagación al
-multiverso vive en `avatar-mind/narrative/[estado-actual]/life-cycle/procesos/` de essence —
-life-cycle se lee directamente, nunca se copia.
-
-Proceso: `../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-mind/narrative/[estado-actual]/life-cycle/procesos/propagar-a-multiverso.md`
-
-Lee y ejecuta ese proceso con los argumentos `$ARGUMENTS`.
+Lee y ejecuta `../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-mind/narrative/[estado-actual]/life-cycle/procesos/propagar-a-multiverso.md` con los argumentos `$ARGUMENTS`.
 
 Parsea `$ARGUMENTS` así:
 
@@ -30,4 +24,4 @@ Ejemplos:
   estima cuántos avatares tienen la versión anterior, cuántos ya están al día, cuántos son excepción.
 - `/propagar-a-multiverso CLAUDE.md --texto-exacto ruta/al/parrafo.md --push` → aplica y pushea.
 
-Regla: no copies este proceso a tu propio `avatar-mind/`. Si algo falta, se arregla en essence.
+**Regla:** este proceso vive sólo en essence y se lee ahí — no lo copies a tu propio avatar. Si algo falta o está mal, se arregla en essence.
