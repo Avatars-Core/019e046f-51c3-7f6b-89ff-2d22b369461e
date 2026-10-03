@@ -13,3 +13,7 @@ rechaces la invocación: pregunta si es la variante anticipatoria y pide la just
 el proceso exige.
 
 **Regla:** este proceso vive sólo en essence y se lee ahí — no lo copies a tu propio avatar. Si algo falta o está mal, se arregla en essence.
+
+**Los hijos son otros avatares.** Lo que haya que hacer en el repo de cada hijo (refactorizarlo, sembrar
+`§ Origen`, tocar su `config.yml`) se le pide **en su propia ventana** con `abrir-avatar-en-terminal`
+(sesión `-Tarea`) y `SendMessage`; nunca lo abras como sub-agente ni lo encarnes.

@@ -1,14 +1,107 @@
-config.local.yaml
-.idea/
-.claude/settings.local.json
-.obsidian/workspace.json
+# Secretos locales — nunca commitear
+**/config.local.yaml
+**/.env
+**/.env.local
 
-**/sessions/*.meta.json
+# Runtime del manager
+avatar-body/github/manager/host-launcher/*.pid
+avatar-body/github/manager/host-launcher/logs/
+avatar-body/github/manager/branch-summaries/
 
-# Sesiones del multiverse-manager — artefactos volátiles per-máquina
+# Capa BACK del modelo de dos capas (conversacion-front-back.md): sesión nativa
+# de la IA, traza efímera y per-máquina. NO es canon. Ver runtime-observable-de-avatares.md.
 **/sessions/
 
-# Runtime de la triada iea.* — lo crea concentrarse.sh al encender la vigilancia
-# sobre un ciclo con artefacto --do--. Contiene .session-id, plantillas
-# renderizadas y el bus events.jsonl: efimero y per-maquina como **/sessions/.
+# Runtime de la tríada iea.* (avatar-body/concentracion/concentrarse.sh crea
+# <avatar-root>/runtime/<conv>/ con .session-id, CLAUDE.md renderizados y el bus
+# events.jsonl). Efímero y per-máquina como **/sessions/: los .session-id apuntan
+# a sesiones locales del binario claude y no significan nada en otra máquina.
 runtime/
+
+# Capa FRONT (conversación canónica) SÍ se versiona: los .conv.jsonl ligados al
+# .md de fase de cada ciclo y el índice conversaciones-index.yml viajan en git.
+# No hay regla amplia *.jsonl que los excluya; si alguna vez se añadiera, conservar:
+#   !**/*.conv.jsonl
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Claude Code local
+.claude/settings.local.json
+*.opml
+
+# Migration scratchpad
+.migration/
+
+# Node.js (avatar-body adapters con dependencias)
+**/node_modules/
+**/package-lock.json
+
+# Copias mutadas efimeras de la prueba por rotura (avatar-body/concentracion/test/
+# rotura-prueba.sh). Viven junto al adapter y no en /tmp porque el parser
+# avatar-lang se resuelve por ruta relativa; se borran al terminar cada mutacion.
+avatar-body/.rotura-*/
+
+# Copias mutadas efimeras de `simular.sh --rotura` para el dominio `multiverso`.
+# Viven DENTRO de avatar-body/multiverse/ y no en /tmp porque ts-node resuelve
+# `node_modules` subiendo por los padres; se borran al terminar cada mutacion.
+avatar-body/multiverse/.simrotura-*/
+
+# Copias mutadas efimeras de `simular.sh --rotura` para los ficheros que viven
+# en el repo del avatar pero FUERA del adapter de la triada (los hooks y el
+# script unico de `claude-access/`). Se borran al terminar cada mutacion.
+avatar-body/.simrotura-*/
+
+# Worktrees efimeros del harness al paralelizar sub-agentes. Son repos git
+# embebidos: un `git add -A` los stagea como gitlinks (86 de ellos el
+# 2026-08-24) y el commit se lleva punteros a ramas que no existen en el
+# remoto. No son del avatar y no se versionan.
+.claude/worktrees/
+
+# Registro runtime de sesiones de coordinacion entre avatares (README.md de
+# avatar-body/coordinacion-avatares/): quien abrio que sesion nombrada, con
+# que PID, cuando y para que tarea. Se autogestiona (abrir-avatar-en-terminal.ps1
+# y traer-avatares-al-frente.ps1 lo leen/reescriben) y no se cura a mano; un
+# commit accidental (8364664) lo trackeo por descuido.
+avatar-body/coordinacion-avatares/sesiones-abiertas.json
+
+# Foto runtime de escritorios virtuales + sesiones (README.md de
+# avatar-body/coordinacion-avatares/): la escribe guardar-estado-escritorios.ps1
+# y la lee restaurar-estado-escritorios.ps1. Mismo criterio que
+# sesiones-abiertas.json - estado de maquina, no se cura a mano.
+avatar-body/coordinacion-avatares/estado-escritorios.json
+
+# Foto runtime de la variante de prueba (guardar-estado-escritorios-prueba.ps1,
+# acotada al escritorio actual). Mismo criterio que estado-escritorios.json:
+# estado de maquina, no se cura a mano. Hoy estaba untracked sin ignorar.
+avatar-body/coordinacion-avatares/estado-escritorio-prueba.json
+
+# ── EL SELLO DEL CANON SE VERSIONA SIEMPRE: PROHIBIDO IGNORARLO (2026-09-27) ──
+#
+# Decision del humano, literal: *«el sello se guarda siempre»*. `.claude/canon-recibido.json`
+# —el veredicto que `scaamn-method/canon-al-dia.mjs` escribe en cada arranque y que
+# el hook `canon-desfasado.js` cobra en cada despacho— NO es estado de maquina y
+# NO entra en la familia de arriba (`sessions/`, `runtime/`, `sesiones-abiertas.json`,
+# `estado-escritorios*.json`). Viaja en git, en el repo de cada avatar.
+#
+# Por que, con las tres consecuencias de no versionarlo:
+#   1. El sello es donde vive el MOTIVO de cada personalizacion (`personalizado`
+#      con su `motivo`). Si no viaja, al clonar se pierden los motivos y cada
+#      divergencia declarada vuelve a parecer un descuido.
+#   2. La caducidad de la amnistia (`divergente-heredado`) se cuenta contra lo
+#      sellado. Sin sello en el repo, el reloj se reinicia en cada clone y no
+#      vence nunca: la deuda perdonada pasa a ser deuda eterna.
+#   3. El control de bloqueo arranca DESARMADO. `canon-desfasado.js` no compara
+#      nada: lee este fichero. Ausente -> permite y sale con 0 (fallo seguro).
+#      Un clone sin sello es un avatar sin el control encendido, y nada lo dice.
+#
+# Ninguna regla de este fichero puede excluirlo, ni aqui ni en el `.gitignore`
+# que cada avatar hereda de este (es artefacto `copiar` del canon). Si alguna vez
+# se anadiera una regla amplia que lo alcanzara (`.claude/*.json`, `**/*-recibido.json`),
+# conservar la negacion explicita:
+#   !.claude/canon-recibido.json
+
+# --- propias del avatar (precedente P-002) ---
+.obsidian/workspace.json

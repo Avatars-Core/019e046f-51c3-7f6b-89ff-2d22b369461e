@@ -1,9 +1,9 @@
 {
   "esquema": 1,
   "essence-uuid": "019d8dc4-d3e0-76ca-b047-70e2b5b71674",
-  "revision": "a3d57b5bbbb4",
+  "revision": "451e7d1eb1ad",
   "sellado": "2026-09-26T22:12:01Z",
-  "aplicado": "2026-09-26T22:12:02Z",
+  "aplicado": "2026-10-03T17:13:09Z",
   "origen": "siembra-en-frio",
   "artefactos": {
     ".claude/agents/scaamn-worker-alto.md": {
@@ -49,9 +49,9 @@
       "estado": "al-dia"
     },
     ".claude/commands/canon-multiverso.md": {
-      "sha256": "e266f97c4878ce1503ab421939c57f5f9d8d21218b37ff82561aaffbb6aa4860",
-      "sha-canon": "e266f97c4878ce1503ab421939c57f5f9d8d21218b37ff82561aaffbb6aa4860",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "cd00e9ff83890a3b90a2ce18ee2333c078c3bdd3cec257769e45c67b3479e1ef",
+      "sha-canon": "cd00e9ff83890a3b90a2ce18ee2333c078c3bdd3cec257769e45c67b3479e1ef",
+      "revision": "451e7d1eb1ad",
       "estado": "al-dia"
     },
     ".claude/commands/cierre-canonico.md": {
@@ -85,87 +85,87 @@
       "estado": "al-dia"
     },
     ".claude/commands/extraer-avatar-padre.md": {
-      "sha256": "a6ac2b9f48ca8459c2193879f7d57d2a4e536b78e8d9a8c00b4bee2ae8dcd765",
-      "sha-canon": "a6ac2b9f48ca8459c2193879f7d57d2a4e536b78e8d9a8c00b4bee2ae8dcd765",
-      "revision": "38bd50c51318",
+      "sha256": "d1fa64fb706aded773ec3d18c61df2ec36da07073a84ce72486ec9fe7af58024",
+      "sha-canon": "d1fa64fb706aded773ec3d18c61df2ec36da07073a84ce72486ec9fe7af58024",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-restart.md": {
-      "sha256": "88654247636586f7ee955fa989624258ced61947cc4c1cc147486cdb06cbdec9",
-      "sha-canon": "88654247636586f7ee955fa989624258ced61947cc4c1cc147486cdb06cbdec9",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "6685bbfa873a0949fd9974537e7111bd70b271e8020f61b2a6ebc4015f54bf12",
+      "sha-canon": "6685bbfa873a0949fd9974537e7111bd70b271e8020f61b2a6ebc4015f54bf12",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-start.md": {
-      "sha256": "bda5ac2e4a425f870c835fc63e3a188c7f15c13200097c570a3c910c224d1640",
-      "sha-canon": "bda5ac2e4a425f870c835fc63e3a188c7f15c13200097c570a3c910c224d1640",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "54c475f698fd8d41c729527b45c06494fb89e7f39bcfd8a6690cedc1e6e6903c",
+      "sha-canon": "54c475f698fd8d41c729527b45c06494fb89e7f39bcfd8a6690cedc1e6e6903c",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-task-classify.md": {
-      "sha256": "14fa84a1b9eb5c8f57b7d0c02f3e8be04e52909f94b14dd70a99f629b6ee3043",
-      "sha-canon": "14fa84a1b9eb5c8f57b7d0c02f3e8be04e52909f94b14dd70a99f629b6ee3043",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "342343efcb960288911221f5e612f70fb0a09d8fa034626ef5276677878c5a48",
+      "sha-canon": "342343efcb960288911221f5e612f70fb0a09d8fa034626ef5276677878c5a48",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-task-create.md": {
-      "sha256": "5992f7162938a0f7ff74f116ffee6cb90b9ee2241b5369e1e8003b5ae404650b",
-      "sha-canon": "5992f7162938a0f7ff74f116ffee6cb90b9ee2241b5369e1e8003b5ae404650b",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "07d5f734233a26979c9f805c1a0d08967b8fa58f743936512d1a6f8cc279ad84",
+      "sha-canon": "07d5f734233a26979c9f805c1a0d08967b8fa58f743936512d1a6f8cc279ad84",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-task-prioritize.md": {
-      "sha256": "dc0f6b9ba05f9af35405f7aa8728d801096e5d475b0c4ac4bda20345c879e828",
-      "sha-canon": "dc0f6b9ba05f9af35405f7aa8728d801096e5d475b0c4ac4bda20345c879e828",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "556a6ed7f9b0a6bd229032e5bf144c93a9e5b358858f0518c78c92398caf1e8d",
+      "sha-canon": "556a6ed7f9b0a6bd229032e5bf144c93a9e5b358858f0518c78c92398caf1e8d",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/init/init-tasks.md": {
-      "sha256": "4cd2ad5361af4865620a4efc5b07fc62d7a8e77a187f62ab389e0486a3175e80",
-      "sha-canon": "4cd2ad5361af4865620a4efc5b07fc62d7a8e77a187f62ab389e0486a3175e80",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "db532ab88987723795ab85fec7a7e44d26d4751af7a501cc9d2495c38839580e",
+      "sha-canon": "db532ab88987723795ab85fec7a7e44d26d4751af7a501cc9d2495c38839580e",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/milestones/milestones-export.md": {
-      "sha256": "5f96f65b118b91a6a6976d7c2f770f96f629340495213fd9ffbba5d27dc12184",
-      "sha-canon": "5f96f65b118b91a6a6976d7c2f770f96f629340495213fd9ffbba5d27dc12184",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "79472127385be2e8adaa116897803c8d30247b43f0f4a1ef1fc6fb8fe47861f8",
+      "sha-canon": "79472127385be2e8adaa116897803c8d30247b43f0f4a1ef1fc6fb8fe47861f8",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/milestones/milestones-import.md": {
-      "sha256": "0fcf949694c0fa4efa63523a13770562f8229244b4392c1b7a9554af4b98e041",
-      "sha-canon": "0fcf949694c0fa4efa63523a13770562f8229244b4392c1b7a9554af4b98e041",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "fb4613afb59d260146c9a7d823db40f6a7ca1063e3a7e9df3eec129a3be89d09",
+      "sha-canon": "fb4613afb59d260146c9a7d823db40f6a7ca1063e3a7e9df3eec129a3be89d09",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/phase-do.md": {
-      "sha256": "bbe6aa33062cee55c3ee80143ffed56749df3bc8c9b705188b780b9273ac91e5",
-      "sha-canon": "bbe6aa33062cee55c3ee80143ffed56749df3bc8c9b705188b780b9273ac91e5",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "99982e1ca323cbcc4d975b836d1bff983d4b9351ec34bc2ddcde441b4837fa06",
+      "sha-canon": "99982e1ca323cbcc4d975b836d1bff983d4b9351ec34bc2ddcde441b4837fa06",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/phase-estado-actual.md": {
-      "sha256": "638963a5c72ac70ed1b793ecc15e20a7493490ef25a6b29c45c3a75294abb840",
-      "sha-canon": "638963a5c72ac70ed1b793ecc15e20a7493490ef25a6b29c45c3a75294abb840",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "0649e49ae5e06ccc6b6f4e08f6f38788906dd9c0d915499e4b03a5c548c72ad4",
+      "sha-canon": "0649e49ae5e06ccc6b6f4e08f6f38788906dd9c0d915499e4b03a5c548c72ad4",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/phase-explore.md": {
-      "sha256": "d6b35626b1977e0bb11bfa63e821986579719c9795f8abb85664976f5aef6885",
-      "sha-canon": "d6b35626b1977e0bb11bfa63e821986579719c9795f8abb85664976f5aef6885",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "6ddf85b409fcaa4e6168c6e86e2226925f7adcbb222ad89523ad2f9ec6685002",
+      "sha-canon": "6ddf85b409fcaa4e6168c6e86e2226925f7adcbb222ad89523ad2f9ec6685002",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/phase-plan.md": {
-      "sha256": "24c4fde0074bc78b122afe0693f68c8528e7d9ef692c1bf29c861b28b948762d",
-      "sha-canon": "24c4fde0074bc78b122afe0693f68c8528e7d9ef692c1bf29c861b28b948762d",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "7ba128059ae44a1bc52c85fd743901d17ebeb2328c5f97a6ff3f3a5a65124da3",
+      "sha-canon": "7ba128059ae44a1bc52c85fd743901d17ebeb2328c5f97a6ff3f3a5a65124da3",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/github/phase-release.md": {
-      "sha256": "50d893f6cf669f4d27aa288c3cd0f43135032c0798c4e3154ff8f8309d065954",
-      "sha-canon": "50d893f6cf669f4d27aa288c3cd0f43135032c0798c4e3154ff8f8309d065954",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "63d2c90b1704e273f76871b5cea8b1e53bf4a7c8eb1ec05dbd467bf8f5f7fb75",
+      "sha-canon": "63d2c90b1704e273f76871b5cea8b1e53bf4a7c8eb1ec05dbd467bf8f5f7fb75",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/historial-git.md": {
@@ -175,9 +175,9 @@
       "estado": "al-dia"
     },
     ".claude/commands/instalar-sudo-temporal.md": {
-      "sha256": "644b72e705264a34b987da604cff2ef71a40f40e7c725a51ba88942ed5a1b4c3",
-      "sha-canon": "644b72e705264a34b987da604cff2ef71a40f40e7c725a51ba88942ed5a1b4c3",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "1d4f785c5f6054a11dd2c8377e32757a1a47116c43ae355ee80388a6eb29601b",
+      "sha-canon": "1d4f785c5f6054a11dd2c8377e32757a1a47116c43ae355ee80388a6eb29601b",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/commands/propagar-a-multiverso.md": {
@@ -193,9 +193,9 @@
       "estado": "al-dia"
     },
     ".claude/commands/tiempo-ahorrado-ia.md": {
-      "sha256": "860cab1dbc1283f28cc2cae576018480d1ea1bd1903a62268a4a4209c799c527",
-      "sha-canon": "860cab1dbc1283f28cc2cae576018480d1ea1bd1903a62268a4a4209c799c527",
-      "revision": "a3d57b5bbbb4",
+      "sha256": "804dbcbf7f20a678877242fb6a7a24b2583f23de33482da726f40bf057463a1e",
+      "sha-canon": "804dbcbf7f20a678877242fb6a7a24b2583f23de33482da726f40bf057463a1e",
+      "revision": "7b5e92a67c30",
       "estado": "al-dia"
     },
     ".claude/hooks/header-fecha-avatar.js": {
@@ -205,11 +205,10 @@
       "estado": "al-dia"
     },
     ".claude/settings.json": {
-      "sha256": "e044faed8ad0da98188847a3d8502711218711180b1039f4897f816a47dafe6a",
-      "sha-canon": "459661146664c039411f3fd3a07c450b602db48d0d8edec4bb162fba48a2a2d8",
-      "revision": "a3d57b5bbbb4",
-      "estado": "divergente-sin-decidir",
-      "caducado-desde": "divergente-heredado"
+      "sha256": "b5195bde1ebf2f9955160075c7bde46b654887d7ad39873e81c4ab3831ac0063",
+      "sha-canon": "b5195bde1ebf2f9955160075c7bde46b654887d7ad39873e81c4ab3831ac0063",
+      "revision": "451e7d1eb1ad",
+      "estado": "al-dia"
     },
     ".githooks/commit-msg": {
       "sha256": "11a227002433398a04deb1e594b52f533bc5e4f4e1cd0b31ff01300b6a81cb76",
@@ -230,12 +229,14 @@
       "estado": "al-dia"
     },
     ".gitignore": {
-      "sha256": "b364aee19faecc45c6d599ac57e1fdb0d2b7a3eaf0719a4adaf3864193967dca",
+      "sha256": "1447b0fdd3a19d8078b798a5bb1f71f8c828d03d525187c1d915a23192e95dc8",
       "sha-canon": "5d490e8af448734172db176f11d73458c86e5e7d39277d3fe3b66885c716165c",
-      "revision": "a3d57b5bbbb4",
-      "estado": "divergente-sin-decidir",
-      "caducado-desde": "divergente-heredado"
+      "revision": "451e7d1eb1ad",
+      "estado": "personalizado",
+      "personalizado": "precedente P-002: Javi 03/10: «Fusionar» — .gitignore del canon + bloque final con las reglas propias del avatar que el canon no cubre",
+      "personalizado-el": "2026-10-03",
+      "personalizado-sobre-revision": "451e7d1eb1ad",
+      "personalizado-sha-canon": "5d490e8af448734172db176f11d73458c86e5e7d39277d3fe3b66885c716165c"
     }
-  },
-  "revision-objetivo": "38bd50c51318"
+  }
 }
