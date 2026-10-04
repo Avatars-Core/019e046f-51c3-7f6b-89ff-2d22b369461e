@@ -1,9 +1,9 @@
 {
   "esquema": 1,
   "essence-uuid": "019d8dc4-d3e0-76ca-b047-70e2b5b71674",
-  "revision": "451e7d1eb1ad",
+  "revision": "a1c2e1bb90e1",
   "sellado": "2026-09-26T22:12:01Z",
-  "aplicado": "2026-10-03T17:13:09Z",
+  "aplicado": "2026-10-04T19:57:01Z",
   "origen": "siembra-en-frio",
   "artefactos": {
     ".claude/agents/scaamn-worker-alto.md": {
@@ -205,9 +205,9 @@
       "estado": "al-dia"
     },
     ".claude/settings.json": {
-      "sha256": "b5195bde1ebf2f9955160075c7bde46b654887d7ad39873e81c4ab3831ac0063",
-      "sha-canon": "b5195bde1ebf2f9955160075c7bde46b654887d7ad39873e81c4ab3831ac0063",
-      "revision": "451e7d1eb1ad",
+      "sha256": "7bdb0e077579584489b4d60f181aa519777c4db9109388b1639a56e966e5a723",
+      "sha-canon": "7bdb0e077579584489b4d60f181aa519777c4db9109388b1639a56e966e5a723",
+      "revision": "a1c2e1bb90e1",
       "estado": "al-dia"
     },
     ".githooks/commit-msg": {

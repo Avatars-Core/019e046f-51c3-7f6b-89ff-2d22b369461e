@@ -26,6 +26,11 @@
             "type": "command",
             "timeout": 15,
             "command": "node \"$CLAUDE_PROJECT_DIR/../../scaamn-method/canon-al-dia.mjs\" --raiz=\"$CLAUDE_PROJECT_DIR\""
+          },
+          {
+            "type": "command",
+            "timeout": 120,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/secretos-al-dia.js\" --evento=inicio --raiz=\"$CLAUDE_PROJECT_DIR\""
           }
         ]
       }
@@ -58,6 +63,21 @@
             "type": "command",
             "timeout": 10,
             "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-rm-rf.js\""
+          },
+          {
+            "type": "command",
+            "timeout": 10,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-alias-powershell.js\""
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 10,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-alias-powershell.js\""
           }
         ]
       },
@@ -107,6 +127,11 @@
     "UserPromptSubmit": [
       {
         "hooks": [
+          {
+            "type": "command",
+            "timeout": 30,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/secretos-al-dia.js\" --evento=prompt --raiz=\"$CLAUDE_PROJECT_DIR\""
+          },
           {
             "type": "command",
             "command": "echo \"SCAAMN delegacion: ejecuta esta peticion del chat integra en un sub-agente via el tool Agent con subagent_type scaamn-worker (agente terminal sin el tool Agent, no puede re-delegar). El hilo principal solo despacha, orquesta y compone el resumen final, sin hacer el trabajo el mismo. Esta orden aplica SOLO a este hilo orquestador: un sub-agente NUNCA vuelve a delegar, ejecuta la tarea el mismo. Aplica a toda peticion, incluso trivial. Excepcion: si la tarea es de otro avatar, no uses Agent (ni scaamn-worker ni encarnacion): abrelo en su propia ventana con abrir-avatar-en-terminal (sesion -Tarea) y mandale el trabajo con SendMessage, para que el humano confirme en esa ventana lo que haga falta. Lo propio si se delega. DECLARA LA DIFICULTAD en cada despacho: la description empieza por la marca [dificultad: X] con X uno de trivial, sencilla, normal, dificil, profunda; sin la marca el hook deniega la llamada. El peldano lo decide la TAREA (criterio en avatar-body/despacho/criterio-de-dificultad.md) y la escala es fija: no nombres a mano scaamn-worker-bajo/medio/alto/maximo, se deniega; si la tarea pide mas, declara el peldano de arriba.\""
