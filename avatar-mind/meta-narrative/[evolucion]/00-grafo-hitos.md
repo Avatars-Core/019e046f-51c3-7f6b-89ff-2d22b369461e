@@ -13,6 +13,12 @@ Ninguno todavía. `slide-architect` es un avatar joven de dominio estable: su si
 en contenido, pero el avatar aún no ha vivido un cambio-de-naturaleza que merezca consolidarse
 como hito. El pasado crudo vive en git.
 
+## En ejecución
+
+- [`generar-pptx`](generar-pptx.md) — `EN_EJECUCION` — el avatar pasa a generar el `.pptx` final con plantillas
+  genéricas (primera: `oferta-resumen`), sin contenido ni marca de clientes en el repo. Nació como encargo el
+  2026-10-06. Destino: `scaa`, `narrative`, `avatar-body`.
+
 ## Lagunas (direcciones abiertas)
 
 - [`cumplir-regla-14`](cumplir-regla-14.md) — `DECISION_CERRADA` — formalizar con bloque

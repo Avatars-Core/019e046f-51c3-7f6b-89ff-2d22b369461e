@@ -28,6 +28,40 @@ warnings imputables (cómo se mide, en § *Cómo se ha medido el check*).
 (DoS en los lectores JXL, HEIF e ICNS). `pptxgenjs` no lo usa en tiempo de ejecución (su llamada está comentada en el
 código), así que se fuerza `2.0.4` con `overrides` del `package.json`: `npm audit` = 0.
 
+Commit `78091c9` (con la firma del plan).
+
+### 2. Marcas
+
+`avatar-body/marcas/README.md` (formato de `brand.json`, qué se versiona) y `demo/` con la marca ficticia «Ejemplo
+Consultoría»: `brand.json` (paleta verde oscuro y teja, Calibri; la empresa lleva un `&` a propósito, para ejercitar
+el escape) y `hacer-logos.py`, que dibuja `logo-claro.png` (287×99) y `logo-pie.png` (116×40). Commit `5a5cef5`.
+
+### 3. Plantilla
+
+`oferta-resumen/plantilla.json` (tipos, orden, secciones y límites, compartida con `comprobar.py`),
+`validar-contenido.js`, `generar.js`, y en `ejemplo/` los dos `contenido.json` ficticios (14 y 10 diapositivas) y
+`hacer-imagenes.py`. Commit `325e148`.
+
+**Ampliación sobre el plan, sin cambiar su alcance.** Los tres tipos desdoblables llevan dos **composiciones** cada uno
+(`diagrama-y-tarjetas` / `cifras-y-diagrama`, `diagrama-y-filas` / `diagrama-y-modulos`, `principal-y-secundarias` /
+`dos-capturas`), para que el desdoble no repita la misma diapositiva: es la variedad que tenía el material de partida.
+La medida del texto vive en `lib/componentes.js` y la llama `generar.js` al añadir cada caja, así que «no se encoge»
+lo cobra el generador con el campo exacto; `validar-contenido.js` cobra solo la estructura.
+
+### 4. Herramientas
+
+`herramientas/construir.ps1`, `render.ps1`, `comprobar.py` y `topng.py`. Commit `780e059`. Los `.ps1` van en ASCII
+porque PowerShell 5.1 lee sin BOM como ANSI, y `construir.ps1` no pasa argumentos vacíos (5.1 se los come).
+`comprobar.py` busca `TODO` solo en mayúsculas: la primera pasada marcó «Todo esto…» del ejemplo como resto de
+plantilla.
+
+### 5. Memoria
+
+`avatar-body/generadores-pptx/README.md`, `avatar-mind/scaa/plantillas-pptx/index.md` y `oferta-resumen.md` (con
+bloque `avatar-lang`), el proceso `narrative/[estado-actual]/procesos/generar-pptx-resumen-oferta.md` y el nodo
+`meta-narrative/[evolucion]/generar-pptx.md`, enlazado desde `00-grafo-hitos.md` en «En ejecución». El avatar de
+origen se nombra solo por su uuid, porque su nombre lleva el del cliente.
+
 ## Cómo se ha medido el check
 
 El `pre-commit` corre el compilador desde `scaamn-method` contra el **árbol real**, no contra el worktree, así que no
