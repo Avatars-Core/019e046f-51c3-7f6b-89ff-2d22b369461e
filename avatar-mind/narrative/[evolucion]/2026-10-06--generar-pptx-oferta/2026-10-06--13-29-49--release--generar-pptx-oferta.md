@@ -49,10 +49,10 @@ mecánico, y la revisión estética es la única pieza abierta.
 | 15 | escalada al padre | hereda solo de essence: no hay padre intermedio. El patrón «medir el pre-commit en worktree» es material para essence, abajo |
 | 16 | commit + push | commiteado en la rama del worktree; **push pendiente del hilo principal**, que integra la rama en `master` |
 | 17 | `CLAUDE.md` mapa | 112 líneas (presupuesto 120), sin changelog ni mecánica inline: el detalle vive en `scaa/` y `narrative/` |
-| 18 | pre-merge | **no aplica aquí**: la integración la hace el hilo principal; `master` estaba en `255a17c` al empezar, que es la base de la rama |
+| 18 | pre-merge | **no aplica aquí**: la integración la hace el hilo principal; `master` estaba en `2ef5268` al empezar, que es la base de la rama |
 | 19 | DoD documental | no aplica: no se tocó código con documentación en otro avatar |
 | 20 | front de conversaciones | sin front materializado: la conversación de las fases vive en el transcript del harness, no en un back `{ts,role,text}` proyectable |
-| 21 | conocimiento ajeno | (b) registrado: el avatar de origen (`01a10c4d-41b7-7540-9a80-167285ca3a73`) tiene que saber que el generador existe y cómo se encarga el deck real (D4). No se le escribe: queda como `GP-3`, para abrirlo en su ventana |
+| 21 | conocimiento ajeno | (b) registrado: el avatar de origen (`01a10c4d-41b7-7540-9a80-167285ca3a73`) tiene que saber que el generador existe y cómo se encarga el deck real (D4). Se le avisó después por `SendMessage` (`GP-3`, cerrado) |
 
 ## Reparto a `scaa`
 
@@ -61,10 +61,10 @@ Sí: el estado de las plantillas y su contrato van a `scaa/plantillas-pptx/`; el
 ## Lo que el humano tiene que decidir
 
 - **T14** (`GP-1`): revisar los PNG del ejemplo. Tres detalles menores ya vistos están en el `--check--`.
-- **Nombres del cliente en el repo público** (`GP-2`): el `idea.md`, el `--explore--` y el `--plan--` de este ciclo
-  (commit `255a17c`, anterior al DO) nombran al cliente y al proveedor del material de partida, y `scaa/presentaciones/`
-  tiene menciones previas del proveedor. Este ciclo no añade ninguna, pero tampoco borra las que había.
-- **Aviso al avatar de origen** (`GP-3`).
+- **Menciones previas del proveedor** (`GP-2`, cerrado): tras anonimizar el historial, `idea`, `--explore--` y
+  `--plan--` ya no nombran al cliente. Solo quedan las menciones del proveedor en `scaa/presentaciones/`, ya
+  publicadas y fuera de alcance; este ciclo no añade ninguna.
+- **Aviso al avatar de origen** (`GP-3`, cerrado): hecho por `SendMessage` el 2026-10-06.
 
 ## Material para essence (escalada, no mandato)
 

@@ -1,0 +1,6 @@
+# tareas-pendientes-narrativas.jsonl — lo que quedo sin terminar, no lo que git no ve.
+# Semantica DISTINTA de pendientes-de-integracion.jsonl (trabajo TERMINADO sin publicar).
+# Lo vuelca el paso 5 de cierre-canonico.md (essence). Una linea JSON por entrada.
+# Cerrar es anadir "cerrado": "<fecha>", nunca borrar.
+# Campos: id, resumen, contexto, origen, abierto, cerrado (solo al completarse).
+{"id":"2026-10-06--cerrar-laguna-cumplir-regla-14","resumen":"Decidir el destino de la laguna cumplir-regla-14: su criterio de exito ya se cumple, pero nadie la ha graduado ni cerrado.","contexto":"Medido el 2026-10-06: npm run check desde scaamn-method da 0 errores y ningun warning de regla 14; los 69 md de avatar-mind/scaa/presentaciones/ llevan bloque avatar-lang. La laguna (avatar-mind/meta-narrative/[evolucion]/cumplir-regla-14.md, estado DECISION_CERRADA, linea en 00-grafo-hitos.md) sigue como direccion abierta. Graduarla es cosa del cierre formal de un ciclo (release-base.md), no del cierre ligero: queda como tarea para abrir un ciclo minimo que la retire del grafo o la declare cumplida por otra via.","origen":"cierre-canonico 2026-10-06, tras el ciclo generar-pptx-oferta","abierto":"2026-10-06"}

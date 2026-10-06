@@ -2,7 +2,7 @@
 
 > Entrada: el [`--do--`](2026-10-06--13-01-43--do--generar-pptx-oferta.md). Tests del
 > [`--plan--`](2026-10-06--12-41-40--plan--generar-pptx-oferta.md), ejecutados de verdad el 2026-10-06 entre las 13:10 y
-> las 13:30, sobre la rama del worktree (último commit del DO: `4427a70`).
+> las 13:30, sobre la rama del worktree (último commit del DO: `2de53a3`).
 
 ## Resultados
 
@@ -16,7 +16,7 @@
 | T6 | **verde** | cuatro entradas rotas, cada una exit 1 y 0 `.pptx` en su carpeta. Mensajes: `contenido.diapositivas: 15 diapositivas; la plantilla admite de 10 a 14`; `marca.tema.colors.accent1: "#FF6C6F" no es un color de seis cifras hexadecimales sin '#' (quita el '#')`; `contenido.diapositivas[5].imagen.fichero: no existe la imagen "…/no-existe.png"`; `contenido.diapositivas[11].total: dice 250 y la suma de los hitos es 240` |
 | T7 | **verde** | `hacer-imagenes.py --reglas 1440x900` y reconstruir sin tocar código (`git diff` vacío): la imagen de la idea clave pasa de 4,23 × 4,85 a 5,03 × 3,14 pulgadas (proporción 0,8727 → 1,6000) y `comprobar.py` sigue en verde |
 | T8 | **verde** | PowerPoint abierto con ventana y una presentación «del humano» (simulada en otro proceso, sin PowerPoint real abierto antes: 0 procesos). `render.ps1` sobre el ejemplo: exit 0, PDF de 14 páginas; después, la presentación del humano **sigue abierta** y el proceso, vivo (1). Tras cerrar solo esa presentación, 0 procesos. En T2 y T3, sin PowerPoint previo, 0 procesos huérfanos |
-| T9 | **verde** | el patrón del plan sobre `avatar-body/` y `avatar-mind/scaa/plantillas-pptx/`: 0 coincidencias. Ampliado a **todas las líneas que añade la rama** (`git diff 255a17c HEAD`): 0 |
+| T9 | **verde** | el patrón del plan sobre `avatar-body/` y `avatar-mind/scaa/plantillas-pptx/`: 0 coincidencias. Ampliado a **todas las líneas que añade la rama** (`git diff 2ef5268 HEAD`): 0 |
 | T10 | **verde** | `git ls-files avatar-body` con `.pptx`, `.pdf`, `.png` o `.jpg`: 0. En todo el repo: 0 |
 | T11 | **verde** | «NO genera el» en `CLAUDE.md` y `config.yml`: 0; `scaa/[estado-actual]` en `config.local.yaml.example`: 0; `oferta-resumen` en `config.yml`: 1; la viñeta «Genera el `.pptx` final» está literal en `CLAUDE.md` |
 | T12 | **verde** | compilador acotado al avatar sobre una copia del árbol con este worktree dentro (cómo, en el `--do--`): 0 errores y 0 warnings imputables, igual que en el explore; los tres bloques `avatar-lang` nuevos parsean (150 → 153 bloques del cierre) |
@@ -41,7 +41,7 @@ partir «II» a la línea siguiente. Los tres dependen del texto del ejemplo, no
 
 ## Refactorización
 
-vueltas: 1 · medido con `--contra=255a17c` (primer commit del ciclo).
+vueltas: 1 · medido con `--contra=2ef5268` (primer commit del ciclo).
 
 - **Antes**: el máximo de las notas (1.200) escrito en dos sitios (`lib/notas.js` y `plantilla.json`); cinco símbolos
   exportados que nadie importaba (`sombra` del kit, `RANURAS`, `FUENTES_SEGURAS`, `MAX_CARACTERES`, `RAIZ_AVATAR`);
@@ -57,10 +57,9 @@ vueltas: 1 · medido con `--contra=255a17c` (primer commit del ciclo).
   sin estos cambios: los seis commits del DO pasaron el hook sin que mirara ni uno de sus ficheros (lo dice su propia
   salida, «150 bloques», cuando la rama tiene 153). Medida aplicada: T12 sobre la copia con *junctions*. Medida que se
   propone, no de este ciclo: que el hook compile el árbol del worktree que commitea.
-- **Nombres del cliente ya publicados.** T9 da 0 en lo que este ciclo añade, pero el `idea.md`, el `--explore--` y el
-  `--plan--` (commit `255a17c`, anterior al DO) nombran al cliente y al proveedor del material de partida, y hay
-  menciones previas del proveedor en `scaa/presentaciones/`. No se han tocado: reescribirlos cambia artefactos ya
-  aprobados y no borra el historial de un repo público. Lo decide el humano (en el `--release--`).
+- **Menciones previas del proveedor.** T9 da 0 en lo que este ciclo añade. Al anonimizar el historial antes del push
+  se reescribieron `idea`, `--explore--` y `--plan--`: ya no nombran al cliente. Quedan solo las menciones del
+  proveedor del material de partida en `scaa/presentaciones/`, ya publicadas y fuera del alcance de este ciclo.
 
 ## Salida
 
