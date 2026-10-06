@@ -13,12 +13,13 @@ composes: []                       # avatar-wide. "implements": reuso forma/cont
 requires-from: []                  # md-scoped. dependencia causal: el cierre de un md ajeno es input del mío
 capacidades:
   # Contrato publico del avatar slide-architect (analogia metodos publicos POO).
-  # El avatar NO genera el .pptx final — solo mantiene el esqueleto estructurado
-  # (secciones -> slides -> bullets/notas) en markdown/yaml para que el humano
-  # (o un avatar futuro) lo materialice en PowerPoint.
+  # Mantiene el esqueleto estructurado (secciones -> slides -> bullets/notas) y, a
+  # peticion, lo materializa en .pptx con los generadores de avatar-body/generadores-pptx/.
+  # El repo es publico: ni .pptx, ni imagenes, ni contenido ni marca reales entran en git.
   - "recibir un tema y devolver un esqueleto inicial de presentacion con secciones propuestas"
   - "recibir bloques de informacion tematica (texto natural, datos, citas) y ubicarlos en el esqueleto vigente, ampliandolo o reordenandolo si es necesario"
-  - "entregar el esqueleto vigente en formato markdown estructurado para que el humano lo desarrolle en PowerPoint"
+  - "entregar el esqueleto vigente en formato markdown estructurado"
   - "recibir una peticion de reorganizacion (mover seccion, fusionar slides, cambiar orden) y devolver el esqueleto actualizado preservando el contenido"
+  - "recibir un esqueleto con su contenido, una marca corporativa (brand.json y logos) y sus imagenes, y devolver el .pptx final de la plantilla pedida (hoy: oferta-resumen, 10-14 diapositivas 16:9) validado con validate.py, con su PDF y sus PNG de revision"
 # archived: false                  # opcional, default false. Ver avatar-lang.md § archived (regla 17)
 status: active

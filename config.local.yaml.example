@@ -1,9 +1,14 @@
-# Plantilla. Copia este fichero a `config.local.yaml` y rellena con tu path local.
+# Plantilla. Copia este fichero a `config.local.yaml` y rellena con tus paths locales.
 # `config.local.yaml` está en .gitignore — cada colaborador tiene el suyo.
 #
 # El sistema-operado de slide-architect es atípico: vive dentro del propio
-# avatar (avatar-mind/scaa/[estado-actual]/presentaciones/). El path por
-# defecto apunta ahí; cada colaborador puede sobreescribirlo si trabaja con
-# una ubicación distinta.
+# avatar (avatar-mind/scaa/presentaciones/). El path por defecto apunta ahí;
+# cada colaborador puede sobreescribirlo si trabaja con una ubicación distinta.
 sistema-operado:
-  path: ""   # ruta absoluta a la carpeta de presentaciones (típicamente <avatar-root>/avatar-mind/scaa/[estado-actual]/presentaciones)
+  path: ""   # ruta absoluta a la carpeta de presentaciones (típicamente <avatar-root>/avatar-mind/scaa/presentaciones)
+
+# Generadores de .pptx (avatar-body/generadores-pptx/). Todo esto queda FUERA del repo, que es público.
+generadores-pptx:
+  salidas: ""     # carpeta donde se dejan el .pptx, el PDF y los PNG de revisión
+  marcas: ""      # carpeta con las marcas reales: <empresa>/brand.json y sus logos
+  skill-pptx: ""  # opcional: carpeta del skill pptx, si no se encuentra sola en ~/.claude/skills/synced/*/pptx

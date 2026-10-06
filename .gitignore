@@ -105,3 +105,13 @@ avatar-body/coordinacion-avatares/estado-escritorio-prueba.json
 
 # --- propias del avatar (precedente P-002) ---
 .obsidian/workspace.json
+# Generadores de .pptx (ciclo 2026-10-06--generar-pptx-oferta). El repo es PÚBLICO: ni las
+# salidas, ni las imágenes, ni las marcas reales entran en git. Solo la marca ficticia demo/,
+# y de ella solo el brand.json y su script (los PNG se generan).
+avatar-body/generadores-pptx/salidas/
+avatar-body/generadores-pptx/oferta-resumen/ejemplo/imagenes/
+avatar-body/marcas/*/
+!avatar-body/marcas/demo/
+avatar-body/marcas/demo/*.png
+avatar-body/**/*.pptx
+avatar-body/**/*.pdf

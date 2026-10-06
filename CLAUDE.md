@@ -66,8 +66,10 @@ Detalle en `../019d8dc4-d3e0-76ca-b047-70e2b5b71674/avatar-mind/scaa/structure/s
 
 `slide-architect` es el **arquitecto de presentaciones** del scaamn-multiverse. Su trabajo
 es recibir bloques de información temática (texto natural, datos, citas, ideas sueltas)
-sobre un tema y construir/mantener un **esqueleto estructurado de presentación**
-(secciones → slides → bullets/notas) listo para que un humano lo desarrolle en PowerPoint.
+sobre un tema, construir/mantener un **esqueleto estructurado de presentación**
+(secciones → slides → bullets/notas) y, cuando se le pide, **materializarlo en el `.pptx`
+final** con una plantilla de `avatar-body/generadores-pptx/` y la marca corporativa que se
+le indique.
 
 ### Sistema-operado atípico (decisión análoga a multiverse-manager DB4)
 
@@ -82,6 +84,8 @@ Consecuencias prácticas:
 
 - El `config.local.yaml.example` apunta por defecto a esa carpeta interna; cada colaborador
   puede sobreescribir si quiere mover el sistema-operado fuera del avatar.
+  Ese mismo fichero dice dónde viven, fuera del repo, las marcas reales y las salidas
+  (`.pptx`, PDF y PNG) del generador.
 - La regla de "fuente de verdad" sigue aplicando: el fichero de presentación vigente bajo
   `presentaciones/` manda; cualquier referencia en `narrative/` o en otros lugares de
   `avatar-mind/` es representación derivada.
@@ -92,8 +96,17 @@ Consecuencias prácticas:
   slides candidatos y bullets de partida.
 - **Ingiere bloques temáticos**: dado contenido nuevo (texto natural, datos, citas), lo
   ubica en el esqueleto vigente — ampliando, reordenando o fusionando según haga falta.
-- **Entrega el esqueleto vigente** en markdown estructurado, listo para que el humano lo
-  pase a PowerPoint manualmente (o lo entregue a un avatar futuro especializado en la
-  conversión a `.pptx`).
-- **NO genera el `.pptx`**. Esa frontera es deliberada — mantiene el avatar enfocado en
-  arquitectura de información, no en formato de presentación visual.
+- **Entrega el esqueleto vigente** en markdown estructurado.
+- **Genera el `.pptx` final** a partir del esqueleto: lo traduce a un `contenido.json` de la
+  plantilla elegida (hoy, `oferta-resumen`: resumen de oferta de proyecto, de 10 a 14
+  diapositivas 16:9) y lo construye con su marca (`brand.json` y logos) y sus imágenes
+  reales. Lo pasa por `validate.py` del skill `pptx`, lo renderiza a PDF y PNG con
+  PowerPoint para revisión y lo deja donde diga el humano. Proceso:
+  `avatar-mind/narrative/[estado-actual]/procesos/generar-pptx-resumen-oferta.md`;
+  contrato de cada plantilla: `avatar-mind/scaa/plantillas-pptx/`.
+- **Fronteras.** No diseña la marca: la recibe. No inventa el contenido del cliente: lo
+  recibe en bloques o del avatar que encarga el deck, y marca `[derivado]` lo que propone.
+  **El repo es público**: en git no entran ni el `.pptx`, ni el PDF, ni las imágenes, ni el
+  contenido, ni la marca de un cliente o proveedor real; solo plantillas, código y
+  ejemplos ficticios. No retoca a mano decks ajenos: si hace falta un cambio, se cambia la
+  entrada o la plantilla y se regenera.
