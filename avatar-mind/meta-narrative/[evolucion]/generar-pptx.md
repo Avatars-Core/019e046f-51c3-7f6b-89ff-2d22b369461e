@@ -1,6 +1,6 @@
 ---
 hito: generar-pptx
-estado: EN_EJECUCION
+estado: CONSOLIDADO
 sigue-a: []
 precede-a: []
 fecha: 2026-10-06
@@ -36,3 +36,10 @@ Un deck que mezcla contenido, marca y maquetación en un solo fichero no es una 
 entradas es lo que permite que el mismo código sirva a cualquier cliente sin publicar a ninguno, y medir (píxeles de
 cada imagen, anchura de cada texto) en vez de fijar números a mano es lo que impide que un cambio de entrada rompa la
 salida en silencio.
+
+## Consolidación (2026-10-06)
+
+Cerrado con el [`--release--`](../../narrative/[evolucion]/2026-10-06--generar-pptx-oferta/2026-10-06--13-29-49--release--generar-pptx-oferta.md)
+del ciclo: estado en `scaa/plantillas-pptx/`, método en `narrative/[estado-actual]/procesos/generar-pptx-resumen-oferta.md`
+y contrato nuevo en `CLAUDE.md` y `config.yml`. Queda abierta, fuera del hito, la revisión visual del humano sobre el
+ejemplo (T14, `GP-1` de `pendientes-de-integracion.jsonl`).

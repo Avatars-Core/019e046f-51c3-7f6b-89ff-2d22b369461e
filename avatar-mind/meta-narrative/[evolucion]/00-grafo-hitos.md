@@ -8,16 +8,12 @@ lectura directa — los nodos no lo enlazan, lo citan por nombre.
 
 ## Hitos consolidados
 
-Ninguno todavía. `slide-architect` es un avatar joven de dominio estable: su sistema-operado
-(el esqueleto vivo de la presentación bajo `scaa/presentaciones/`) ha crecido
-en contenido, pero el avatar aún no ha vivido un cambio-de-naturaleza que merezca consolidarse
-como hito. El pasado crudo vive en git.
+- [`generar-pptx`](generar-pptx.md) — `CONSOLIDADO` (2026-10-06) — primer cambio de naturaleza del avatar: deja
+  de entregar solo el esqueleto y genera el `.pptx` final con plantillas genéricas (primera: `oferta-resumen`), sin
+  contenido ni marca de clientes en el repo. Nació como encargo, no como laguna. Destino: `scaa`, `narrative`,
+  `avatar-body`.
 
-## En ejecución
-
-- [`generar-pptx`](generar-pptx.md) — `EN_EJECUCION` — el avatar pasa a generar el `.pptx` final con plantillas
-  genéricas (primera: `oferta-resumen`), sin contenido ni marca de clientes en el repo. Nació como encargo el
-  2026-10-06. Destino: `scaa`, `narrative`, `avatar-body`.
+El pasado crudo vive en git.
 
 ## Lagunas (direcciones abiertas)
 
