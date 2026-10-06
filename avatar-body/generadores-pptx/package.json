@@ -1,0 +1,26 @@
+{
+  "name": "slide-architect-generadores-pptx",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generadores de .pptx de slide-architect (pptxgenjs): plantillas genericas, sin contenido ni marca de ningun cliente.",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "preparar-ejemplo": "python oferta-resumen/ejemplo/hacer-imagenes.py && python ../marcas/demo/hacer-logos.py",
+    "ejemplo": "npm run preparar-ejemplo && powershell -NoProfile -ExecutionPolicy Bypass -File herramientas/construir.ps1 -Contenido oferta-resumen/ejemplo/contenido.json -Marca ../marcas/demo/brand.json -Imagenes oferta-resumen/ejemplo/imagenes -Salida salidas/ejemplo/oferta-ejemplo.pptx",
+    "minimo": "npm run preparar-ejemplo && powershell -NoProfile -ExecutionPolicy Bypass -File herramientas/construir.ps1 -Contenido oferta-resumen/ejemplo/contenido-minimo.json -Marca ../marcas/demo/brand.json -Imagenes oferta-resumen/ejemplo/imagenes -Salida salidas/minimo/oferta-minimo.pptx",
+    "check": "node oferta-resumen/validar-contenido.js oferta-resumen/ejemplo/contenido.json && node oferta-resumen/validar-contenido.js oferta-resumen/ejemplo/contenido-minimo.json"
+  },
+  "dependencies": {
+    "image-size": "2.0.4",
+    "pptxgenjs": "4.0.1"
+  },
+  "overrides": {
+    "pptxgenjs": {
+      "image-size": "2.0.4"
+    }
+  }
+}

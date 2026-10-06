@@ -1,8 +1,9 @@
 # PLAN — plantilla y generador del `.pptx` «resumen de oferta de proyecto»
 
-aprobado-por: PENDIENTE @ PENDIENTE
+aprobado-por: fjcuenase @ 2026-10-06T12:48:00+02:00
 
-> **SIN APROBAR.** La firma la pone el humano en esta ventana (`aprobado-por: <humano> @ <ISO-8601>`), con D1-D4 decididas.
+> **APROBADO** por el humano en la ventana de este avatar el 2026-10-06 a las 12:48, con **D1 = A, D2 = A, D3 = A y
+> D4 = A** (las cuatro recomendadas; ver § *Decisiones para el humano*). Firma trasladada al plan por el DO.
 > Entrada: el [`--explore--`](2026-10-06--12-41-40--explore--generar-pptx-oferta.md). El texto exacto del cambio de contrato
 > está en el segundo artefacto de PLAN, [`--plan--texto-del-contrato`](2026-10-06--12-41-41--plan--texto-del-contrato.md).
 
