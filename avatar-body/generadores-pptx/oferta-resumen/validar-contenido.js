@@ -126,7 +126,7 @@ function validarEstructura(c) {
       default:
         break;
     }
-    errores.push(...validarNotas(d.notas, `${campo}.notas`, i === ds.length - 1));
+    errores.push(...validarNotas(d.notas, `${campo}.notas`, i === ds.length - 1, PLANTILLA.notas.max_caracteres));
   });
   return errores;
 }

@@ -60,7 +60,28 @@ plantilla.
 `avatar-body/generadores-pptx/README.md`, `avatar-mind/scaa/plantillas-pptx/index.md` y `oferta-resumen.md` (con
 bloque `avatar-lang`), el proceso `narrative/[estado-actual]/procesos/generar-pptx-resumen-oferta.md` y el nodo
 `meta-narrative/[evolucion]/generar-pptx.md`, enlazado desde `00-grafo-hitos.md` en «En ejecución». El avatar de
-origen se nombra solo por su uuid, porque su nombre lleva el del cliente.
+origen se nombra solo por su uuid, porque su nombre lleva el del cliente. Commit `9221d4b`.
+
+### 6. Contrato, el último
+
+Con T1-T10 en verde (resultados en el `--check--`), el texto exacto del
+[anexo](2026-10-06--12-41-41--plan--texto-del-contrato.md) en `CLAUDE.md` (§ 1-3), `config.yml` (§ 4) y
+`config.local.yaml.example` (§ 5, que corrige de paso la ruta rota). En `.gitignore`, en la sección propia del avatar
+(precedente P-002, que el sello del canon ya declara `personalizado`; añadir líneas no lo caduca, solo un cambio del
+canon lo haría): salidas, imágenes del ejemplo, marcas que no sean `demo/`, PNG de `demo/` y cualquier `.pptx` o `.pdf`
+bajo `avatar-body/`. Commit `4427a70`.
+
+| fichero | bytes antes | bytes después |
+|---|---|---|
+| `CLAUDE.md` | 9.734 (99 líneas) | 10.717 (112 líneas; presupuesto del mapa: 120) |
+| `config.yml` | 1.730 | 1.991 |
+| `config.local.yaml.example` | 570 | 943 |
+| `.gitignore` | 5.032 | 5.505 |
+
+## Salida
+
+Generador, marca demo, plantilla, herramientas, memoria y contrato commiteados en seis pasos, en el orden del plan. Ningún
+paso abortó: `validate.py` pasó a la primera y PowerPoint por COM no falló ninguna vez. Pasa a CHECK.
 
 ## Cómo se ha medido el check
 

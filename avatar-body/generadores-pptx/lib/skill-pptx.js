@@ -91,7 +91,7 @@ function cargarApplyTheme() {
   return require(path.join(dir, "scripts", "apply_theme.js")).applyTheme;
 }
 
-module.exports = { localizarSkill, cargarApplyTheme, leerConfigLocal, RAIZ_AVATAR };
+module.exports = { localizarSkill, cargarApplyTheme, leerConfigLocal };
 
 if (require.main === module) {
   try {

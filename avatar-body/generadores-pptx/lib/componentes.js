@@ -122,7 +122,7 @@ function crearKit(pres, marca, errores) {
     texto(slide, campo, t, { x, y, w, h: 0.3, fontSize: 11, italic: true, color: C.accent6, align: "center", objectName: "Pie de imagen" });
   }
 
-  return { C, HEX, texto, tarjeta, circuloNumerado, insignia, imagen, pieDeImagen, sombra };
+  return { C, HEX, texto, tarjeta, circuloNumerado, insignia, imagen, pieDeImagen };
 }
 
 module.exports = { crearKit, medir };

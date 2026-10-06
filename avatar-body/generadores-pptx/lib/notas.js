@@ -8,11 +8,9 @@
 //   TIEMPO: <minutos> min
 "use strict";
 
-const MAX_CARACTERES = 1200;
-
 // Devuelve la lista de errores { campo, motivo } de unas notas. `campo` es el prefijo
-// (p. ej. "diapositivas[3].notas").
-function validarNotas(notas, campo, esUltima) {
+// (p. ej. "diapositivas[3].notas"); `maximo` sale de la plantilla (plantilla.json > notas).
+function validarNotas(notas, campo, esUltima, maximo) {
   const out = [];
   const f = (c, m) => out.push({ campo: `${campo}.${c}`, motivo: m });
   if (!notas || typeof notas !== "object") return [{ campo, motivo: "obligatorias (mensaje, guion, datos, transicion, tiempo)" }];
@@ -25,7 +23,7 @@ function validarNotas(notas, campo, esUltima) {
   if (typeof notas.tiempo !== "number" || !(notas.tiempo > 0) || notas.tiempo > 10) f("tiempo", "minutos, número entre 0 y 10");
   if (!out.length) {
     const largo = componerNotas(notas, esUltima).length;
-    if (largo > MAX_CARACTERES) out.push({ campo, motivo: `las notas compuestas ocupan ${largo} caracteres; el máximo es ${MAX_CARACTERES}` });
+    if (largo > maximo) out.push({ campo, motivo: `las notas compuestas ocupan ${largo} caracteres; el máximo es ${maximo}` });
   }
   return out;
 }
@@ -39,4 +37,4 @@ function componerNotas(notas, esUltima) {
   return lineas.join("\n");
 }
 
-module.exports = { validarNotas, componerNotas, MAX_CARACTERES };
+module.exports = { validarNotas, componerNotas };

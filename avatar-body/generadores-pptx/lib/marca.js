@@ -83,4 +83,4 @@ function cargarMarca(ficheroMarca) {
   };
 }
 
-module.exports = { cargarMarca, ErrorDeEntrada, RANURAS, FUENTES_SEGURAS };
+module.exports = { cargarMarca, ErrorDeEntrada };
