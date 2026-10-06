@@ -36,7 +36,7 @@ detalles menores que no bloquean y quedan para el humano: en la idea clave queda
 tarjetas de módulos y de riesgos tienen hueco abajo con textos cortos; y en la tarjeta oscura del plan «fase II» puede
 partir «II» a la línea siguiente. Los tres dependen del texto del ejemplo, no de la plantilla.
 
-**Material para T14**, fuera de git: `C:\Users\FRANCI~1\AppData\Local\Temp\claude\slide-architect-revision\`, con
+**Material para T14**, fuera de git: `%TEMP%\claude\slide-architect-revision\` (la carpeta Temp del usuario de Windows), con
 `ejemplo-14\` (`.pptx`, PDF y 14 PNG) y `minimo-10\` (`.pptx`, PDF y 10 PNG).
 
 ## Refactorización

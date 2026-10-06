@@ -26,7 +26,7 @@ La carpeta del ciclo se conserva con este `--release--` como rastro y marca de e
 ## T14 — la revisión del humano
 
 **Pendiente.** El sub-agente que cerró no habla con el humano. El material está fuera de git en
-`C:\Users\FRANCI~1\AppData\Local\Temp\claude\slide-architect-revision\` (`ejemplo-14\` y `minimo-10\`, con `.pptx`, PDF y
+`%TEMP%\claude\slide-architect-revision\` (la carpeta Temp del usuario de Windows) (`ejemplo-14\` y `minimo-10\`, con `.pptx`, PDF y
 PNG) y queda registrado como `GP-1` en [`pendientes-de-integracion.jsonl`](../../../../pendientes-de-integracion.jsonl),
 que el avatar enseña al arrancar. Cuando el humano responda, su respuesta se cita en el `--check--` y `GP-1` se cierra.
 El estado terminal del plan pide esa cita: hasta entonces el contrato está publicado sobre un generador que pasa todo lo
