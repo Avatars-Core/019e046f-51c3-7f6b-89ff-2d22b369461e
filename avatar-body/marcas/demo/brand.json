@@ -1,0 +1,28 @@
+{
+  "nombre": "Ejemplo Consultoría",
+  "empresa": "Ejemplo Consultoría & Asociados",
+  "web": "www.ejemplo-consultoria.invalid",
+  "tema": {
+    "name": "Ejemplo Consultoría",
+    "headFontFace": "Calibri",
+    "bodyFontFace": "Calibri",
+    "colors": {
+      "dk1": "113A3A",
+      "lt1": "FFFFFF",
+      "dk2": "24524F",
+      "lt2": "EEF4F2",
+      "accent1": "C8611F",
+      "accent2": "113A3A",
+      "accent3": "24524F",
+      "accent4": "8FB8B0",
+      "accent5": "F8E1CF",
+      "accent6": "5E6B68",
+      "hlink": "24524F",
+      "folHlink": "5E6B68"
+    }
+  },
+  "logos": {
+    "principal": "logo-claro.png",
+    "pie": "logo-pie.png"
+  }
+}
