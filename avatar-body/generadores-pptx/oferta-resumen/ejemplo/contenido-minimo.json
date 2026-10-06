@@ -1,0 +1,333 @@
+{
+  "plantilla": "oferta-resumen",
+  "_aviso": "EJEMPLO FICTICIO MINIMO: 10 diapositivas, sin agenda ni desdobles. Cliente, cifras y fechas inventados.",
+  "meta": {
+    "titulo": "Resumen de la oferta",
+    "cliente": "Consorcio del Valle",
+    "proyecto": "Avisos de averías",
+    "subtitulo": "Sistema ficticio para recibir, priorizar y cerrar avisos de averías de la red de agua",
+    "version": "v1.0",
+    "fecha": "6 de octubre de 2026",
+    "presenta": "Ejemplo Consultoría",
+    "pie": "Consorcio del Valle · Avisos de averías · Resumen de la oferta (ejemplo ficticio)"
+  },
+  "diapositivas": [
+    {
+      "tipo": "portada",
+      "notas": {
+        "mensaje": "Presentamos un resumen de la oferta para el sistema de avisos de averías del Consorcio del Valle.",
+        "guion": [
+          "Quién presenta y para quién",
+          "Este resumen acompaña a la documentación completa de la oferta"
+        ],
+        "datos": "Ejemplo ficticio: cliente, cifras y fechas inventados para probar la plantilla.",
+        "transicion": "Empezamos por para quién es el sistema.",
+        "tiempo": 1
+      }
+    },
+    {
+      "tipo": "que-y-para-quien",
+      "titulo": "Un sistema para los avisos del consorcio",
+      "cifras": [
+        {
+          "etiqueta": "Cliente",
+          "valor": "Consorcio del Valle",
+          "detalle": "Servicio de aguas de la comarca"
+        },
+        {
+          "etiqueta": "Ámbito",
+          "valor": "12 municipios",
+          "detalle": "Red de abastecimiento y saneamiento, con un solo centro de control"
+        },
+        {
+          "etiqueta": "Tamaño",
+          "valor": "240 h",
+          "detalle": "Con el área del vecino; la app móvil, en una fase II"
+        }
+      ],
+      "fueraDeAlcance": "el alumbrado público y la recogida de residuos, que tienen su propio servicio.",
+      "notas": {
+        "mensaje": "El sistema da servicio a doce municipios con un único centro de control.",
+        "guion": [
+          "Quién es el cliente y qué servicio presta",
+          "El ámbito: abastecimiento y saneamiento",
+          "El tamaño previsto y lo que queda para una fase II"
+        ],
+        "datos": "12 municipios y 240 h [derivado]: cifras del ejemplo ficticio.",
+        "transicion": "¿Por qué hacerlo ahora? Porque la norma se mueve.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "por-que-ahora",
+      "titulo": "Por qué ahora: el reglamento cambia",
+      "hitos": [
+        {
+          "fecha": "03/02/2025",
+          "titulo": "Reglamento vigente",
+          "detalle": "Plazos de respuesta por gravedad del aviso"
+        },
+        {
+          "fecha": "01/09/2026",
+          "titulo": "Borrador nuevo",
+          "detalle": "En consulta: de 3 a 5 niveles de gravedad"
+        },
+        {
+          "fecha": "01/01/2027",
+          "titulo": "Entrada en vigor",
+          "detalle": "Fecha prevista del texto definitivo"
+        }
+      ],
+      "destacado": {
+        "etiqueta": "Además",
+        "texto": "el borrador puede cambiar antes de aprobarse: el sistema no puede depender de su texto final."
+      },
+      "notas": {
+        "mensaje": "La norma que regula los plazos está cambiando, así que el diseño debe absorber el cambio.",
+        "guion": [
+          "Qué dice hoy el reglamento",
+          "Qué cambia el borrador",
+          "Por qué eso obliga a configurar en vez de programar"
+        ],
+        "datos": "Fechas del ejemplo ficticio.",
+        "transicion": "De ahí sale la idea clave del diseño.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "idea-clave",
+      "titulo": "La idea clave",
+      "frase": [
+        "Los estados son código.",
+        "Las reglas, configuración con fecha."
+      ],
+      "puntos": [
+        "Plazos y niveles de gravedad se versionan con su fecha de entrada en vigor",
+        "Cada aviso guarda la versión de reglas con la que se abrió",
+        "El reglamento nuevo entrará como una versión más, sin tocar el código"
+      ],
+      "imagen": {
+        "fichero": "captura-reglas.png",
+        "pie": "Prototipo: reglas por versiones (recorte)",
+        "ajuste": "cover",
+        "foco": "arriba"
+      },
+      "notas": {
+        "mensaje": "Lo estable va en el código y lo que cambia con la norma va en configuración con fecha.",
+        "guion": [
+          "Qué es estable: el ciclo de vida del aviso",
+          "Qué cambia: plazos, niveles y umbrales",
+          "Cada aviso recuerda con qué reglas se abrió"
+        ],
+        "datos": "Diseño propuesto [derivado].",
+        "transicion": "Veamos el modelo que sostiene esa idea.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "modelo-funcional",
+      "composicion": "diagrama-y-tarjetas",
+      "titulo": "El aviso es el centro: un aviso, una avería",
+      "imagen": {
+        "fichero": "diagrama-estados.png",
+        "pie": "Ciclo de vida de un aviso"
+      },
+      "texto": "Dos máquinas de estados: el aviso y la orden de trabajo que lo resuelve.",
+      "tarjetas": [
+        {
+          "titulo": "Agrupar",
+          "texto": "es del aviso: varios avisos de la misma avería se unen en uno"
+        },
+        {
+          "titulo": "Reabrir",
+          "texto": "es de la orden: solo si la reparación no resolvió la avería"
+        }
+      ],
+      "notas": {
+        "mensaje": "Un aviso corresponde a una avería, y su ciclo de vida es el eje del sistema.",
+        "guion": [
+          "El aviso y sus estados",
+          "La orden de trabajo, que cambia a otro ritmo",
+          "Agrupar y reabrir no son lo mismo"
+        ],
+        "datos": "Estados deducidos por nosotros [derivado]; hay que confirmarlos con el cliente.",
+        "transicion": "Pasamos a cómo está construido.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "solucion-tecnica",
+      "composicion": "diagrama-y-filas",
+      "titulo": "Tres piezas y una base de datos",
+      "imagen": {
+        "fichero": "c4-contenedores.png",
+        "pie": "Contenedores del sistema"
+      },
+      "filas": [
+        {
+          "tecnologia": "Web",
+          "papel": "Aplicación del centro de control y área del vecino"
+        },
+        {
+          "tecnologia": "API",
+          "papel": "Servicio con el motor de estados y el planificador"
+        },
+        {
+          "tecnologia": "Base de datos",
+          "papel": "Avisos, órdenes, reglas e historial"
+        },
+        {
+          "tecnologia": "Acceso",
+          "papel": "Identificación de vecinos y operadores"
+        }
+      ],
+      "notas": {
+        "mensaje": "La solución son tres piezas sencillas sobre una base de datos.",
+        "guion": [
+          "La aplicación web para operadores y vecinos",
+          "La API con la lógica y el planificador",
+          "La base de datos como única fuente de verdad"
+        ],
+        "datos": "Arquitectura propuesta [derivado].",
+        "transicion": "Todo esto ya se puede ver en el prototipo.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "prototipo",
+      "composicion": "principal-y-secundarias",
+      "titulo": "Un prototipo navegable de la aplicación",
+      "imagenes": [
+        {
+          "fichero": "captura-panel.png",
+          "pie": "Panel del operador: avisos abiertos y plazos"
+        },
+        {
+          "fichero": "captura-detalle.png",
+          "pie": "Aviso en curso, con su reloj"
+        },
+        {
+          "fichero": "captura-ficha.png",
+          "pie": "El vecino sigue su aviso"
+        }
+      ],
+      "nota": "Datos ficticios · reloj simulado · funciona sin conexión",
+      "notas": {
+        "mensaje": "El prototipo enseña la aplicación terminada con datos ficticios.",
+        "guion": [
+          "El panel del operador",
+          "Un aviso en curso con su cuenta atrás",
+          "Lo que ve el vecino"
+        ],
+        "datos": "Prototipo con datos inventados.",
+        "transicion": "Con esto, el plan.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "plan-de-horas",
+      "titulo": "Plan propuesto: 240 h en cinco hitos",
+      "hitos": [
+        {
+          "nombre": "H0 Arranque y análisis",
+          "horas": 20
+        },
+        {
+          "nombre": "H1 Base técnica y acceso",
+          "horas": 55
+        },
+        {
+          "nombre": "H2 Avisos y estados",
+          "horas": 70
+        },
+        {
+          "nombre": "H3 Área del vecino",
+          "horas": 55
+        },
+        {
+          "nombre": "H4 Pruebas y despliegue",
+          "horas": 40
+        }
+      ],
+      "total": 240,
+      "nota": "La app móvil y las operaciones masivas, a la fase II",
+      "notas": {
+        "mensaje": "Proponemos 240 horas repartidas en cinco hitos, pendientes de validar.",
+        "guion": [
+          "El reparto por hitos",
+          "Qué queda para la fase II",
+          "Se valida en el arranque"
+        ],
+        "datos": "Horas del ejemplo ficticio [derivado]; total calculado por el generador.",
+        "transicion": "Y lo que puede torcerlo: los riesgos.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "riesgos",
+      "titulo": "Riesgos y preguntas para el cliente",
+      "riesgos": [
+        {
+          "titulo": "Reglamento",
+          "pregunta": "¿Cuándo se aprueba el texto definitivo?",
+          "nivel": "alto"
+        },
+        {
+          "titulo": "Acceso",
+          "pregunta": "¿Con qué sistema se identifican los vecinos?",
+          "nivel": "alto"
+        },
+        {
+          "titulo": "Despliegue",
+          "pregunta": "¿Nube propia o servidor del consorcio?",
+          "nivel": "medio"
+        },
+        {
+          "titulo": "Calendario",
+          "pregunta": "¿Qué días hábiles cuentan para los plazos?",
+          "nivel": "medio"
+        },
+        {
+          "titulo": "Avisos",
+          "pregunta": "¿Correo, SMS o los dos?",
+          "nivel": "bajo"
+        },
+        {
+          "titulo": "Integración",
+          "pregunta": "¿Hay un sistema de órdenes de trabajo previo?",
+          "nivel": "bajo"
+        }
+      ],
+      "notas": {
+        "mensaje": "Seis frentes abiertos, cada uno con su pregunta para el cliente.",
+        "guion": [
+          "Los dos riesgos altos primero",
+          "Los de despliegue y calendario",
+          "Los de avisos e integración"
+        ],
+        "datos": "Riesgos identificados por nosotros [derivado].",
+        "transicion": "Para cerrar, los próximos pasos.",
+        "tiempo": 2
+      }
+    },
+    {
+      "tipo": "proximos-pasos",
+      "pasos": [
+        "Presentar este resumen y el prototipo al consorcio",
+        "Responder primero las preguntas de reglamento y acceso",
+        "Acordar el entorno de despliegue",
+        "Validar el análisis y el plan en el arranque (H0)"
+      ],
+      "notas": {
+        "mensaje": "Cuatro pasos para arrancar, empezando por resolver las preguntas que más mueven el alcance.",
+        "guion": [
+          "Presentar y recoger respuestas",
+          "Decidir el despliegue",
+          "Arrancar con la validación del plan"
+        ],
+        "datos": "Sin cifras.",
+        "tiempo": 1
+      }
+    }
+  ]
+}

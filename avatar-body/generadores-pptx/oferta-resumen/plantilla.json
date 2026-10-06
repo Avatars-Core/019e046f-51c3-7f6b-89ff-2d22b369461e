@@ -1,0 +1,22 @@
+{
+  "id": "oferta-resumen",
+  "descripcion": "Resumen de oferta de proyecto: una idea por diapositiva, 16:9 (LAYOUT_WIDE)",
+  "tamano": { "ancho_emu": 12192000, "alto_emu": 6858000 },
+  "diapositivas": { "min": 10, "max": 14 },
+  "secciones": ["Apertura", "La oferta", "Modelo funcional", "Solución técnica", "Prototipo", "Plan y riesgos", "Cierre"],
+  "tipos": [
+    { "tipo": "portada", "seccion": "Apertura", "obligatoria": true, "maximo": 1 },
+    { "tipo": "agenda", "seccion": "Apertura", "obligatoria": false, "maximo": 1 },
+    { "tipo": "que-y-para-quien", "seccion": "La oferta", "obligatoria": true, "maximo": 1 },
+    { "tipo": "por-que-ahora", "seccion": "La oferta", "obligatoria": true, "maximo": 1 },
+    { "tipo": "idea-clave", "seccion": "La oferta", "obligatoria": true, "maximo": 1 },
+    { "tipo": "modelo-funcional", "seccion": "Modelo funcional", "obligatoria": true, "maximo": 2, "composiciones": ["diagrama-y-tarjetas", "cifras-y-diagrama"] },
+    { "tipo": "solucion-tecnica", "seccion": "Solución técnica", "obligatoria": true, "maximo": 2, "composiciones": ["diagrama-y-filas", "diagrama-y-modulos"] },
+    { "tipo": "prototipo", "seccion": "Prototipo", "obligatoria": true, "maximo": 2, "composiciones": ["principal-y-secundarias", "dos-capturas"] },
+    { "tipo": "plan-de-horas", "seccion": "Plan y riesgos", "obligatoria": true, "maximo": 1 },
+    { "tipo": "riesgos", "seccion": "Plan y riesgos", "obligatoria": true, "maximo": 1 },
+    { "tipo": "proximos-pasos", "seccion": "Cierre", "obligatoria": true, "maximo": 1 }
+  ],
+  "notas": { "max_caracteres": 1200 },
+  "texto": { "cuerpo_min_pt": 14, "pie_min_pt": 10 }
+}
