@@ -68,6 +68,11 @@
             "type": "command",
             "timeout": 10,
             "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-alias-powershell.js\""
+          },
+          {
+            "type": "command",
+            "timeout": 10,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-push-no-publicar.js\""
           }
         ]
       },
@@ -78,6 +83,11 @@
             "type": "command",
             "timeout": 10,
             "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-alias-powershell.js\""
+          },
+          {
+            "type": "command",
+            "timeout": 10,
+            "command": "node \"$CLAUDE_PROJECT_DIR/../019d8dc4-d3e0-76ca-b047-70e2b5b71674/.claude/hooks/guard-push-no-publicar.js\""
           }
         ]
       },
